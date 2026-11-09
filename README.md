@@ -5,6 +5,13 @@ dizendo se a oferta é boa de verdade. A equipe usa um painel web para ver as me
 
 Construí este projeto com Claude Code a partir de outubro de 2026 e ele roda em produção numa VPS Linux.
 
+Este repositório tem o pipeline inteiro, em duas gerações:
+
+- **Curadora** (raiz do repositório): a versão atual, descrita abaixo.
+- **Coletora e normalizadora** (`coletora-normalizadora/`): a primeira versão, que rodava a cada minuto nas janelas de
+  venda. A coletora lê os grupos, confere no Mercado Livre e escolhe as ofertas; a normalizadora transforma a oferta
+  bruta em post pronto (chamada, título, preço, cupom e imagem) para revisão humana.
+
 > **Sobre esta cópia.** Este repositório é uma versão de portfólio. IDs de grupos, links de afiliado, nomes de grupos
 > e de pessoas e o endereço do servidor foram trocados por valores fictícios. O banco de dados real não está aqui.
 
@@ -73,6 +80,9 @@ Só usa a biblioteca padrão do Python (3.10 ou mais novo). Não há dependênci
 python -X utf8 -m unittest discover -s tests
 ```
 
+Os scripts de `coletora-normalizadora/` foram feitos para rodar no servidor Linux: parte dos testes de lá depende de
+módulos e caminhos do servidor e não passa no Windows (78 de 103 passam).
+
 O painel e a leitura ao vivo dependem de uma ponte de WhatsApp e de credenciais do Mercado Livre que não fazem parte
 deste repositório.
 
@@ -95,6 +105,9 @@ deste repositório.
 | `curadora/banco.py` | esquema do SQLite |
 | `manutencao.py` | backup e vigilante |
 | `vps/` | serviços e timers do systemd, Caddyfile |
+| `coletora-normalizadora/perfume_deliver.py` | a coletora (primeira versão) |
+| `coletora-normalizadora/perfume_manual_normalizer.py` | a normalizadora: monta o post a partir da oferta bruta |
+| `coletora-normalizadora/window_perfume_*.sh` | ligam e desligam a coletora nas janelas de venda |
 | `tests/` | a suíte de testes |
 
 ## Tecnologias

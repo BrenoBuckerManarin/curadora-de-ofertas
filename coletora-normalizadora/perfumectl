@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BANK="/home/ubuntu/.hermes/perfume_image_bank"
+TAP="/home/ubuntu/.hermes/whatsapp/taps/messages.jsonl"
+NORMALIZER_TIMER="perfume-normalizer.timer"
+NORMALIZER_SERVICE="perfume-normalizer.service"
+BRIDGE_SERVICE="whatsapp-bridge-standalone.service"
+BRIDGE_URL="${WHATSAPP_BRIDGE_URL:-http://127.0.0.1:3000}"
+
+cmd="${1:-status}"
+
+unit_active() {
+  systemctl --user is-active "$1" 2>/dev/null || true
+}
+
+unit_enabled() {
+  systemctl --user is-enabled "$1" 2>/dev/null || true
+}
+
+next_timer() {
+  systemctl --user list-timers "$1" --no-pager --all 2>/dev/null | awk 'NR==2 {print $1" "$2" "$3" "$4}'
+}
+
+bridge_health() {
+  python3 - <<'PY'
+import json, os, urllib.request
+url = os.environ.get("WHATSAPP_BRIDGE_URL", "http://127.0.0.1:3000").rstrip("/") + "/health"
+try:
+    data = json.loads(urllib.request.urlopen(url, timeout=3).read().decode())
+    print(f"bridge_health: {data.get('status','unknown')}")
+    print(f"bridge_queue: {data.get('queueLength','unknown')}")
+except Exception as e:
+    print(f"bridge_health: unavailable ({type(e).__name__})")
+PY
+}
+
+tap_status() {
+  python3 - <<'PY'
+from pathlib import Path
+import datetime
+p = Path("/home/ubuntu/.hermes/whatsapp/taps/messages.jsonl")
+if not p.exists():
+    print("tap: missing")
+else:
+    st = p.stat()
+    print(f"tap_size: {st.st_size}")
+    print("tap_mtime: " + datetime.datetime.fromtimestamp(st.st_mtime).isoformat(timespec="seconds"))
+PY
+}
+
+case "$cmd" in
+  status)
+    test -d "$BANK" && echo "image_bank: exists" || echo "image_bank: missing"
+    printf "products_dirs: "
+    find "$BANK/products" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l
+    if test -f "$BANK/raw_index.jsonl"; then
+      printf "raw_index: "
+      du -h "$BANK/raw_index.jsonl" | awk '{print $1}'
+    else
+      echo "raw_index: missing"
+    fi
+    test -f "$BANK/missing_approved.jsonl" && echo "missing_approved: exists" || echo "missing_approved: missing"
+    echo "normalizer_timer: $(unit_active "$NORMALIZER_TIMER") / $(unit_enabled "$NORMALIZER_TIMER")"
+    nt="$(next_timer "$NORMALIZER_TIMER")"
+    test -n "$nt" && echo "next_trigger: $nt" || echo "next_trigger: unavailable"
+    echo "normalizer_service: $(unit_active "$NORMALIZER_SERVICE")"
+    echo "bridge_service: $(unit_active "$BRIDGE_SERVICE") / $(unit_enabled "$BRIDGE_SERVICE")"
+    bridge_health
+    tap_status
+    ;;
+
+  bank-summary)
+    test -d "$BANK" && echo "image_bank: exists" || { echo "image_bank: missing"; exit 0; }
+    printf "products_dirs: "
+    find "$BANK/products" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l
+    printf "total_files_depth2: "
+    find "$BANK" -maxdepth 2 -type f 2>/dev/null | wc -l
+    printf "approved_like_files_depth4: "
+    find "$BANK" -maxdepth 4 -type f 2>/dev/null | grep -Ei 'approved|final' | wc -l
+    ;;
+
+  logs)
+    echo "logs: registry missing command"
+    ;;
+
+  run-once|start|restart|schedule|cron|daemon)
+    echo "registry missing command"
+    ;;
+
+  *)
+    echo "usage: perfumectl status|bank-summary|logs|run-once|start|restart|schedule"
+    exit 2
+    ;;
+esac
