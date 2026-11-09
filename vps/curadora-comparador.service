@@ -1,0 +1,10 @@
+[Unit]
+Description=Curadora: comparador de ofertas em modo sombra (só observa; desliga com dados/comparador.desligado)
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/curadora
+ExecStart=/usr/bin/python3 -X utf8 -m curadora.comparador
+Nice=15
+TimeoutStartSec=280
+MemoryMax=300M

@@ -1,0 +1,32 @@
+# Curadora de perfumes na VPS: TESTE SOMBRA.
+# Só LÊ o arquivo de mensagens da ponte do WhatsApp; não envia nada para grupo nenhum.
+# Separada da Coletora Perfume (Hermes): pasta, banco e processo próprios.
+#
+# Instalar:   cp vps/curadora.service ~/.config/systemd/user/ && systemctl --user daemon-reload
+#             systemctl --user enable --now curadora
+# Ver:        systemctl --user status curadora   |   journalctl --user -u curadora -n 50
+# Parar:      systemctl --user stop curadora     |   remover: disable + apagar o arquivo
+# Painel:     escuta só em 127.0.0.1:8765; para fora, quem atende é o Caddy (vps/Caddyfile) com HTTPS,
+#             em https://curadora.exemplo.com  (login obrigatório: --exigir-login)
+
+[Unit]
+Description=Curadora de perfumes (teste sombra: só lê, não envia)
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/curadora
+ExecStart=/usr/bin/python3 %h/curadora/painel.py --banco %h/curadora/dados/curadora.db --arquivo %h/.hermes/whatsapp/taps/messages.jsonl --do-fim --vigia --radar --exigir-login
+Environment=PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8
+# Radar usa o acesso ao ML que a coletora já tem (autorizado pelo Breno em 03/10).
+# Renovação compartilhada (autorizada pelo Breno em 04/10): se a coletora não renovou em 5h15, a curadora
+# renova com o app da coletora e grava no MESMO arquivo, no formato dela; a coletora relê e segue usando.
+Environment=CURADORA_ML_TOKEN_EMPRESTADO=%h/.hermes/secrets/ml-api-token.json
+Environment=CURADORA_ML_APP_COMPARTILHADO=%h/.hermes/secrets/ml-api-app.env
+Restart=on-failure
+RestartSec=30
+# Menor prioridade que a coletora em produção e teto de memória.
+Nice=10
+MemoryMax=500M
+
+[Install]
+WantedBy=default.target

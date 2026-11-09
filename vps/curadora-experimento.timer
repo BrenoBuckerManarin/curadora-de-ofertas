@@ -1,0 +1,9 @@
+[Unit]
+Description=Curadora: relatório do experimento todo dia às 22:15 (só nos dias do experimento)
+
+[Timer]
+OnCalendar=*-*-* 22:15:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

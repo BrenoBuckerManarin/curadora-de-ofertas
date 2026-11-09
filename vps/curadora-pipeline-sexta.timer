@@ -1,0 +1,10 @@
+[Unit]
+Description=Curadora: pipeline e normalizadora na sexta as 16:35 (Breno, 14/10: 16:50; 16/10: "15 minutos mais cedo")
+
+[Timer]
+OnCalendar=Fri *-*-* 16:35:00
+AccuracySec=1s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Curadora: pipeline de domingo 18/10 as 15:30 (pedido do Breno em 17/10)
+
+[Timer]
+OnCalendar=2026-10-18 15:30:00
+AccuracySec=1s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

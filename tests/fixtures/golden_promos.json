@@ -1,0 +1,516 @@
+[
+ {
+  "grupo": "FONTE GAMA #45",
+  "texto": "*HIS CONFESSION*\nInspirado no Dior Homme Intense\n\n~De: R$219~\n🔥🔥Por: *R$186*\n🎟️Cupom: *AQUITEMCUPOM*\n\n👉🏼 Link para compra: https://meli.la/2stg3pW\n\nSelecione a loja ELIXIRFRAGRACES1",
+  "esperado": {
+   "perfume": true,
+   "produto": "HIS CONFESSION",
+   "preco": 186.0,
+   "preco_de": 219.0,
+   "vendedor": "ELIXIRFRAGRACES1",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": [
+    "AQUITEMCUPOM"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE GAMA #45",
+  "texto": "*ROYAL BLEND NERO*\nUm dos melhores com DNA do Angel's Share de Kilian.\n\n🔥🔥Por: *R$249*\n\n👉🏼 Link para compra: https://meli.la/MTppgYj\n\nSelecione a loja JMOLIVEIRADASILVA",
+  "esperado": {
+   "perfume": true,
+   "produto": "ROYAL BLEND NERO",
+   "preco": 249.0,
+   "preco_de": null,
+   "vendedor": "JMOLIVEIRADASILVA",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE GAMA #45",
+  "texto": "*ONE MILLION EDT 200ml*\nÉ o litrão, preço MUITO ABAIXO!\n \n~De: R$1029~\n🔥🔥Por: *R$542*\n\n👉🏼 Link para compra: https://meli.la/HSuHqTq\n\nSelecione a loja RABANNE",
+  "esperado": {
+   "perfume": true,
+   "produto": "ONE MILLION EDT 200ml",
+   "preco": 542.0,
+   "preco_de": 1029.0,
+   "vendedor": "RABANNE",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE GAMA #45",
+  "texto": "*AL NOBLE SAFEER*\nCítrico e fresco, custo-benefício excelente, tem que aproveitar esse precinho!!!\n\n🔥🔥Por: *R$139*\n\n👉🏼 Link para compra: https://meli.la/940P2sm\n\nSelecione a loja NUNESIMPORT",
+  "esperado": {
+   "perfume": true,
+   "produto": "AL NOBLE SAFEER",
+   "preco": 139.0,
+   "preco_de": null,
+   "vendedor": "NUNESIMPORT",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Delta #52",
+  "texto": "*The Kingdom Lattafa 100ml*\n\nde:R$~239~\n  por:R$*169*😱💥 _NO PIX_\n\n🔗 https://meli.la/hzcYqRX\n\n🛒*Vendido por _Lipx_ (+100k vendas) Verificado pelo mercado livre*☑️",
+  "esperado": {
+   "perfume": true,
+   "produto": "The Kingdom Lattafa 100ml",
+   "preco": 169.0,
+   "preco_de": 239.0,
+   "vendedor": "Lipx",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Delta #52",
+  "texto": "*Attar Al Wesal 100ml*\n\nde:R$~290~\n  por:R$*142,90*😱💥\n\n🔗 https://meli.la/gdXAB9D\n\n🛒*Vendido por _WATHIQ PARFUMS_ (+10k vendas) Verificado pelo mercado livre*☑️",
+  "esperado": {
+   "perfume": true,
+   "produto": "Attar Al Wesal 100ml",
+   "preco": 142.9,
+   "preco_de": 290.0,
+   "vendedor": "WATHIQ PARFUMS",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Delta #52",
+  "texto": "*Eudora Club 6 Exclusive 95ml*\n\nDe:R$~299,00~\n por:R$*101,13* 🔥💥\n\nhttps://meli.la/t1q3ytD\n\n🛒Vendido por _Loja Oficial *Selvagem Essence no ML*_☑️",
+  "esperado": {
+   "perfume": true,
+   "produto": "Eudora Club 6 Exclusive 95ml",
+   "preco": 101.13,
+   "preco_de": 299.0,
+   "vendedor": "Selvagem Essence",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Delta #52",
+  "texto": "*Essencial Atrai 100 Ml*\n\nde:R$~209~\n  por:R$*157,50*😱💥\n\n🔗 https://meli.la/ILNxSqk\n\n🛒*Vendido por _BPSPERFUMARIA_ (+50k vendas) Verificado pelo mercado livre*☑️",
+  "esperado": {
+   "perfume": true,
+   "produto": "Essencial Atrai 100 Ml",
+   "preco": 157.5,
+   "preco_de": 209.0,
+   "vendedor": "BPSPERFUMARIA",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 346",
+  "texto": "ONE MILLION NO PRECINHO\n\nPerfume Rabanne 1 Million Eau de Toilette 30ml\n\nDe R$ 459 por R$ 258 no Pix\n\nVendido por Loja Oficial no ML\nhttps://meli.la/YZFnp1a",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Rabanne 1 Million Eau de Toilette 30ml",
+   "preco": 258.0,
+   "preco_de": 459.0,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 346",
+  "texto": "INSPIRADO NO ACQUA DI GIÒ PROFUMO\n\nPerfume Natura K Max EDP 100ml\n\nDe R$ 279 por R$ 167\n\nLoja Verificada no ML\nhttps://meli.la/3YHHydn",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Natura K Max EDP 100ml",
+   "preco": 167.0,
+   "preco_de": 279.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 346",
+  "texto": "INSPIRADO NO GOD OF FIRE\n\nPerfume Árabe Lattafa Opulent Dubai EDP 100ml\n\nDe R$ 299 por R$ 179\n\nLoja Verificada no ML\nhttps://meli.la/uy1iqMi",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Árabe Lattafa Opulent Dubai EDP 100ml",
+   "preco": 179.0,
+   "preco_de": 299.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 346",
+  "texto": "O TOP 1 DA NATURA, muito bom ter na coleção\n\nPerfume Natura Essencial Sentir EDP 100ml\n\nDe R$ 279 por R$ 139\nUse o Cupom: `FULL10` 🎟️\n\nLoja Verificada no ML\nhttps://meli.la/3gWNwxH",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Natura Essencial Sentir EDP 100ml",
+   "preco": 139.0,
+   "preco_de": 279.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": [
+    "FULL10"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 348",
+  "texto": "INSPIRADO NO L'INTERDIT DA GIVENCHY\n\nPerfume Árabe Fakhar Rose Lattafa EDP 100ml Feminino\n\nDe R$ 483 por R$ 192 no Pix\nUse o Cupom: `VALEMAIS` 🎟️ + Selecione *Pix*\n\nVendido por Loja Oficial no ML\nhttps://meli.la/zR5aVeL",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Árabe Fakhar Rose Lattafa EDP 100ml Feminino",
+   "preco": 192.0,
+   "preco_de": 483.0,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "VALEMAIS"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 348",
+  "texto": "FLORAL FRUTADO\nnotas gourmand amadeirada\n\nPerfume Árabe Armaf Club De Nuit Maleka EDP 105ml Feminino\n\nDe R$ 359 por R$ 246\nUse o Cupom: `SITE10` 🎟️\n\nVendido por Loja Oficial no ML\nhttps://meli.la/ytYOrri",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Árabe Armaf Club De Nuit Maleka EDP 105ml Feminino",
+   "preco": 246.0,
+   "preco_de": 359.0,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "SITE10"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 348",
+  "texto": "MENOR VALOR HISTÓRICO NESSE ÁRABE\n\nPerfume Lattafa Fakhar Platin EDP 100ml\n\nDe R$ 299 por R$ 143 no Pix\n\nVendido por Loja Oficial no ML\nhttps://meli.la/jLtXigr",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Lattafa Fakhar Platin EDP 100ml",
+   "preco": 143.0,
+   "preco_de": 299.0,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE EPSILON | 348",
+  "texto": "LEMBRA DMEIAS O AVENTUS E O MYSLF\n\nKit Body Splash Adventus e Enigma 200ml\n\nDe R$ 140 por R$ 80 no Pix\n\nVendido por Loja Oficial no ML\nhttps://meli.la/aVMd550",
+  "esperado": {
+   "perfume": true,
+   "produto": "Kit Body Splash Adventus e Enigma 200ml",
+   "preco": 80.0,
+   "preco_de": 140.0,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Zeta | 133",
+  "texto": "HOUSTON FULL BLACK POR R$ 136 🥷\n\n➡️ **Relógio Masculino Saint Germain Houston Full Black 40 mm**\n🏬 Loja verificada no Mercado Livre\n\n✅ De R$ ~268~ por R$ 136\n🏷️ Cupom: `LOOKEMDIA`\n\n🛒 Compre aqui: https://meli.la/ap4fxgB",
+  "esperado": {
+   "perfume": false
+  }
+ },
+ {
+  "grupo": "Fonte Zeta | 133",
+  "texto": "*Body Splash Corporal Perfume Capilar My Sweet Delight Barbour's Beauty*\n\n💰 R$ 136,71 Parcelado\n🎟️ Cupom: `CHAPEU`\n\n🛒 https://meli.la/U8t9qnY",
+  "esperado": {
+   "perfume": true,
+   "produto": "Body Splash Corporal Perfume Capilar My Sweet Delight Barbour's Beauty",
+   "preco": 136.71,
+   "preco_de": null,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": [
+    "CHAPEU"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Zeta | 133",
+  "texto": "LE MALE ELIXIR DO ASSALARIADO 🥷\n\n➡️ **Perfume Árabe Masculino Lattafa The Kingdom EDP 100 ml - Original**\n🏬 Loja oficial no ML\n\n✅ R$ 171\n🏷️ Cupom: `MELIAPROVEITA`\n\n🛒 Compre aqui: https://meli.la/t9Ob3mw",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Árabe Masculino Lattafa The Kingdom EDP 100 ml - Original",
+   "preco": 171.0,
+   "preco_de": null,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "MELIAPROVEITA"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Zeta | 133",
+  "texto": "*Perfume Mawwal Saz EDP 100ml*\n\n🔥 De ~R$ 459~ por R$ 198 em 5x\n🎟️ Cupom: GOLAGORA\n\n🏪 Loja: Loja Oficial Mawwal no ML\n\n🛒 https://meli.la/LKPJ4wA",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Mawwal Saz EDP 100ml",
+   "preco": 198.0,
+   "preco_de": 459.0,
+   "vendedor": "Mawwal",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "GOLAGORA"
+   ]
+  }
+ },
+ {
+  "grupo": "#84 FONTE ALFA | PERFUMES",
+  "texto": "O MELHOR DA LINHA \n\n*Natura Homem Sagaz 100ml*\n\nDe ~R$279,00~ ❌\nPor *R$118,00* ✅\n\n🎟️ Cupom: *APROVEITAHOJEML*\n\nLoja Verificada no ML\n🔗https://meli.la/Nsb8bb5",
+  "esperado": {
+   "perfume": true,
+   "produto": "Natura Homem Sagaz 100ml",
+   "preco": 118.0,
+   "preco_de": 279.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": [
+    "APROVEITAHOJEML"
+   ]
+  }
+ },
+ {
+  "grupo": "#84 FONTE ALFA | PERFUMES",
+  "texto": "NOTURNO NO PRECINHO\n\n*Asad Elixir Lattafa 100ml*\n\nDe ~R$299,00~ ❌\nPor *R$231,00* ✅\n\n Loja verificada no ML\n🔗 https://meli.la/G8Fzhmb",
+  "esperado": {
+   "perfume": true,
+   "produto": "Asad Elixir Lattafa 100ml",
+   "preco": 231.0,
+   "preco_de": 299.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "#84 FONTE ALFA | PERFUMES",
+  "texto": "*Club 6 Voyage Eudora 95ml*\n\nDe ~R$154,00~\nPor *R$82,00* 🤩🔥\n\nLoja Verificada no Mercado Livre\n🔗https://meli.la/lds8sMg",
+  "esperado": {
+   "perfume": true,
+   "produto": "Club 6 Voyage Eudora 95ml",
+   "preco": 82.0,
+   "preco_de": 154.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "#84 FONTE ALFA | PERFUMES",
+  "texto": "INSPIRADO NO ALTHAIR\n\n*Bidaya Habibi King 100ml*\n\nDe ~R$349,00~ ❌\nPor *R$252,00* ✅️\n\n🎟️Cupom: *JOGAJUNTO*\n\nSelecione Vendedor BARBOSAIRAILDO no ML \n🔗 https://meli.la/uQkICMu",
+  "esperado": {
+   "perfume": true,
+   "produto": "Bidaya Habibi King 100ml",
+   "preco": 252.0,
+   "preco_de": 349.0,
+   "vendedor": "BARBOSAIRAILDO",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": [
+    "JOGAJUNTO"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE BETA #27",
+  "texto": "*Bidaya Ayat 100ml*\n\n❌️ De: ~R$ 379,00~\n✅️ Por: R$ 218,00\n\n🛒 Loja Oficial Klassey no Mercado Livre\n🔗 https://meli.la/DlWoQc0",
+  "esperado": {
+   "perfume": true,
+   "produto": "Bidaya Ayat 100ml",
+   "preco": 218.0,
+   "preco_de": 379.0,
+   "vendedor": "Klassey",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE BETA #27",
+  "texto": "SUA CHANCE PRA PEGAR \n\n*Club 6 Voyage 95ml*\n\n❌️ ~DE: R$190,00~\n✅️ POR: R$76,00\n\n🎟 CUPOM: *TEMCUPOM*\n\n🛒 Loja Verificada no ML\n🔗 https://meli.la/Sjh6b2m\n",
+  "esperado": {
+   "perfume": true,
+   "produto": "Club 6 Voyage 95ml",
+   "preco": 76.0,
+   "preco_de": 190.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": [
+    "TEMCUPOM"
+   ]
+  }
+ },
+ {
+  "grupo": "FONTE BETA #27",
+  "texto": "*Club 6 Fever 95ml*\n\n❌️ De: ~R$ 299,00~\n✅️ Por: R$ 94,00\n\n🛒 Loja Verificada no ML\n🔗 https://meli.la/lBFoyDE",
+  "esperado": {
+   "perfume": true,
+   "produto": "Club 6 Fever 95ml",
+   "preco": 94.0,
+   "preco_de": 299.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "FONTE BETA #27",
+  "texto": "O MAIS VERSÁTIL\n\n*Natura Homem Essence 100ml*\n\n❌️ De: ~R$ 279,00~\n✅️ Por: R$ 135,00\n\n🎟 Cupom: *BARATINHO*\n\n🛒 Loja Verificada no ML\n🔗 https://meli.la/pLq1yMF",
+  "esperado": {
+   "perfume": true,
+   "produto": "Natura Homem Essence 100ml",
+   "preco": 135.0,
+   "preco_de": 279.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": true,
+   "cupons": [
+    "BARATINHO"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Teta 3",
+  "texto": "*NOVO CUPOM AMAZON EXCLUSIVO PRIME*\n\n10% OFF em compras acima de R$ 250\nLimitado a R$ 50\n\nUse o Cupom: *CORREPRIME* ⚠️\n\nAcesse:\nhttps://www.amazon.com.br/?btn_ref=srctok-0000000000000000&tag=exemplo-20",
+  "esperado": {
+   "perfume": false
+  }
+ },
+ {
+  "grupo": "Fonte Teta 3",
+  "texto": "*LOUIS VUITTON AFTERNOON SWIM DO ASSALARIADO*\n\nMaison Alhambra Jean Lowe Azure 100ml (perfume Unissex)\n\n*Por R$161*\nCupom: *MLMELHOROFERTA* ⚠️\n\nLoja oficial no ML:\nhttps://meli.la/ij0nPzv",
+  "esperado": {
+   "perfume": true,
+   "produto": "Maison Alhambra Jean Lowe Azure 100ml (perfume Unissex)",
+   "preco": 161.0,
+   "preco_de": null,
+   "vendedor": "",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "MLMELHOROFERTA"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Teta 3",
+  "texto": "*O ÚLTIMA LANÇADO DA LINHA,* é o famoso the blend árabe da boticário\n\n_aplique o cupom de R$ 50 OFF_\n\nO Boticário The Blend Saffron Eau De Parfum 100ml\n\n*Por R$309*\n\nLoja oficial O Boticário no ML:\nhttps://meli.la/y7TVoJM",
+  "esperado": {
+   "perfume": true,
+   "produto": "O Boticário The Blend Saffron Eau De Parfum 100ml",
+   "preco": 309.0,
+   "preco_de": null,
+   "vendedor": "O Boticário",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Teta 3",
+  "texto": "*O SALTO PERFEITO EXISTE SIM*\n\nPerfume Carolina Herrera Good Girl Eau de Parfum 150 ml feminino\n\n*Por R$530*\nCupom: *CUPOMTOP* ⚠️\n\nLoja oficial Carolina Herrera no ML\nhttps://meli.la/7VcgSd7",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Carolina Herrera Good Girl Eau de Parfum 150 ml feminino",
+   "preco": 530.0,
+   "preco_de": null,
+   "vendedor": "Carolina Herrera",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "CUPOMTOP"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Eta 03",
+  "texto": "*Egeo Vanilla Vibe Obsession Desodorante Colônia 90ml*\n\nPor *R$112* 🔥 parcelado \n\n🎟️ Cupom: *ESQUENTABELEZA*\n\n👉 *Pegar promoção:* https://meli.la/6OUFJAe\n\nLoja oficial O Boticário no MELI!",
+  "esperado": {
+   "perfume": true,
+   "produto": "Egeo Vanilla Vibe Obsession Desodorante Colônia 90ml",
+   "preco": 112.0,
+   "preco_de": null,
+   "vendedor": "O Boticário",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "ESQUENTABELEZA"
+   ]
+  }
+ },
+ {
+  "grupo": "Fonte Eta 03",
+  "texto": "*Perfume Yves Saint Laurent Y EDP 100ml*\n\nDe ~R$999~ \nPor *R$589* 🔥 no pix \n\n👉 *Pegar promoção:* https://meli.la/wxx9r0W\n\nAgora, no MELI!",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Yves Saint Laurent Y EDP 100ml",
+   "preco": 589.0,
+   "preco_de": 999.0,
+   "vendedor": "",
+   "loja_oficial": false,
+   "verificado": false,
+   "cupons": []
+  }
+ },
+ {
+  "grupo": "Fonte Eta 03",
+  "texto": "*Principia Kit Hidratação E Proteção Facial*\n\nPor *R$46* 🔥\n\n🎟️ Cupom: *BELEZA15OFF*\n\n👉 *Pegar promoção:* https://meli.la/IB6CZ1F\n\nLoja oficial Principia no MELI!",
+  "esperado": {
+   "perfume": false
+  }
+ },
+ {
+  "grupo": "Fonte Eta 03",
+  "texto": "*Perfume Portinari Absoluto Colônia Boticário 100ml*\n\nDe ~R$219~\nPor *R$87* 🔥 parcelado \n\n🎟️ Cupom: *OFFMELI* ou *VALEPROMOML* \n\n👉 *Pegar promoção:* https://meli.la/Y4iamyv\n\nLoja oficial O Boticário no MELI!",
+  "esperado": {
+   "perfume": true,
+   "produto": "Perfume Portinari Absoluto Colônia Boticário 100ml",
+   "preco": 87.0,
+   "preco_de": 219.0,
+   "vendedor": "O Boticário",
+   "loja_oficial": true,
+   "verificado": false,
+   "cupons": [
+    "OFFMELI",
+    "VALEPROMOML"
+   ]
+  }
+ }
+]

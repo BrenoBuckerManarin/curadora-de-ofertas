@@ -1,0 +1,171 @@
+{
+ "id": "card-featured",
+ "type": "recommendations",
+ "recommendation_data": {
+  "recommendation_info": {
+   "polycards": [
+    {
+     "unique_id": "nwMLZQaXRKW7nH2zvrtc-3aRP0AyQXhju6hUatNvJ80",
+     "metadata": {
+      "id": "MLB4614426137",
+      "product_id": "MLB53361124",
+      "user_product_id": "MLBU3901938275",
+      "pid": "MLBP53361124",
+      "pid_extended": "MLBP53361124_MLB4614426137",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-mawwal-symphony-saz-original-masculino-edp-100ml/p/MLB53361124",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate-profile&reco_backend=item_decorator&reco_client=home_affiliate-profile&matt_tool_id=30772056&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=b20f6926-bed2-40e4-8d94-3861ecd6783f&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB4614426137&sid=recos&c_id=/home/card-featured/element&c_uid=278252b2-0d26-4f22-b7ee-3008d9b0b071",
+      "tracks": {
+       "price": {
+        "promotions": [
+         {
+          "campaigns": [
+           {
+            "id": "13745563",
+            "type": "PIX"
+           }
+          ],
+          "type": "price_decrement",
+          "campaign_id": "13745563"
+         }
+        ],
+        "price": 228.05
+       }
+      },
+      "card_type": "list-multicolumn",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "602021-MLA97983986989_112025"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Mawwal Symphony SAZ Original Masculino EDP 100ml",
+        "long_title": false
+       }
+      },
+      {
+       "type": "seller",
+       "id": "seller",
+       "seller": {
+        "text": "Por WATHIQ PARFUMS {icon_cockade}",
+        "values": [
+         {
+          "key": "icon_cockade",
+          "type": "icon",
+          "icon": {
+           "key": "icon_cockade",
+           "alt_text": "Loja oficial",
+           "icon_id": "icon_cockade"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "column": 1,
+       "price": {
+        "previous_price": {
+         "value": 459.9,
+         "currency": "BRL",
+         "decimal_style": "normal"
+        },
+        "current_price": {
+         "value": 228.05,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "discount_label": {
+         "text": "50% OFF no Pix"
+        },
+        "installments": {
+         "text": "ou {price_total} em outros meios",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price_total",
+           "type": "price",
+           "price": {
+            "value": 232.7,
+            "currency": "BRL"
+           },
+           "styles": {
+            "color": "primary"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "column": 1,
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [
+         {
+          "key": "vpp_full_icon",
+          "type": "icon",
+          "icon": {
+           "key": "vpp_full_icon",
+           "alt_text": "Enviado pelo FULL",
+           "icon_id": "vpp_full_icon"
+          }
+         }
+        ],
+        "promise_type": "none",
+        "icon": {
+         "key": "vpp_full_icon",
+         "alt_text": "Enviado pelo FULL",
+         "icon_id": "vpp_full_icon"
+        },
+        "additional_text": "por ser sua primeira compra"
+       }
+      },
+      {
+       "type": "action_links",
+       "id": "action_links",
+       "column": 2,
+       "action_links": [
+        {
+         "id": "show_product",
+         "type": "link",
+         "text": "Ir para produto",
+         "url": "https://www.mercadolivre.com.br/perfume-mawwal-symphony-saz-original-masculino-edp-100ml/p/MLB53361124"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "affiliateName": "FONTE DELTA"
+  }
+ }
+}

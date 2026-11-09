@@ -1,0 +1,9 @@
+[Unit]
+Description=Curadora: vigilante a cada 10 minutos
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target

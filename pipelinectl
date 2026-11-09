@@ -1,0 +1,207 @@
+#!/usr/bin/env python3
+"""Controle do pipeline de perfumes: curadora escolhe -> Gerador -> normalizadora -> grupo Normalizador Promo.
+Feito para o Hermes e para a equipe ligarem e desligarem sem mexer em código (pedido do Breno em 10/10/2026).
+
+  pipelinectl on                              liga agora, até as 22:00
+  pipelinectl on --ate 21:30                  liga agora, até as 21:30
+  pipelinectl on --de 15:00 --ate 22:00       liga no horário marcado
+  pipelinectl off                             desliga
+  pipelinectl status                          ligado ou não, janela, quantas mandou hoje e as últimas
+  pipelinectl grupo off                       a curadora para de falar no grupo da equipe (o pipeline continua)
+  pipelinectl grupo on                        volta a falar (promo limpa + avaliação, enquanto o pipeline roda)
+
+O pipeline manda 1 promo a cada 4 min e espera quando já há 3 mandadas que ainda não foram postadas no GrupoFinal.
+Ele só fala com o grupo Gerador e com a caixa da normalizadora: NUNCA posta no GrupoFinal.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+RAIZ = Path(__file__).resolve().parent
+DADOS = RAIZ / "dados"
+PARAR, ESTADO, REGISTRO, LOG = (DADOS / n for n in ("pipeline.parar", "pipeline.estado.json", "pipeline.jsonl",
+                                                    "pipeline.log"))
+GRUPO = DADOS / "grupo.jsonl"   # o que a curadora pôs no grupo da equipe (promo + avaliação)
+GRUPO_DESLIGADO = DADOS / "grupo.desligado"
+UNIDADE = "curadora-pipeline"
+HORA = re.compile(r"^([01]?\d|2[0-3]):[0-5]\d$")
+
+
+def processos() -> list[int]:
+    """PIDs de pipeline.py rodando (de qualquer jeito que tenham sido ligados)."""
+    achados = []
+    for pasta in Path("/proc").iterdir():
+        if not pasta.name.isdigit() or int(pasta.name) == os.getpid():
+            continue
+        try:
+            partes = (pasta / "cmdline").read_bytes().decode("utf-8", "replace").split("\0")
+        except OSError:
+            continue
+        # o próprio arquivo como argumento ("analisar_pipeline.py" ou um bash -c que cita o nome não contam)
+        if any(p == "pipeline.py" or p.endswith("/pipeline.py") for p in partes) and "--simular" not in partes:
+            achados.append(int(pasta.name))
+    return achados
+
+
+def estado() -> dict:
+    try:
+        return json.loads(ESTADO.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def enviadas_hoje() -> list[dict]:
+    inicio = dt.datetime.combine(dt.date.today(), dt.time()).timestamp()
+    saida = []
+    if REGISTRO.exists():
+        for linha in REGISTRO.read_text(encoding="utf-8").splitlines():
+            try:
+                r = json.loads(linha)
+            except ValueError:
+                continue
+            if r.get("ts", 0) >= inicio:
+                saida.append(r)
+    return saida
+
+
+def no_grupo_hoje() -> list[dict]:
+    inicio = dt.datetime.combine(dt.date.today(), dt.time()).timestamp()
+    saida = []
+    if GRUPO.exists():
+        for linha in GRUPO.read_text(encoding="utf-8").splitlines():
+            try:
+                r = json.loads(linha)
+            except ValueError:
+                continue
+            if r.get("ts", 0) >= inicio:
+                saida.append(r)
+    return saida
+
+
+def status() -> int:
+    pids, e = processos(), estado()
+    if pids:
+        janela = f"das {e['de']} " if e.get("de") else ""
+        print(f"pipeline: LIGADO {janela}até {e.get('ate', '?')} · 1 a cada {e.get('intervalo_min', 4):g} min · "
+              + (f"espera a equipe se houver {e['fila_max']} na fila" if e.get("fila_max") else "sem espera: manda direto"))
+        if e.get("de") and not e.get("feitas") and time.strftime("%H:%M") < e["de"].zfill(5):
+            print(f"aguardando o horário de início ({e['de']})")
+    else:
+        print("pipeline: DESLIGADO")
+    hoje = enviadas_hoje()
+    ok = [r for r in hoje if r.get("status") == "enviado"]
+    falhas = len(hoje) - len(ok)
+    print(f"mandadas hoje: {len(ok)}" + (f" (+{falhas} sem resposta do Gerador)" if falhas else ""))
+    for r in ok[-5:]:
+        print(f"  {time.strftime('%H:%M', time.localtime(r['ts']))} {r.get('produto', '')[:48]} · "
+              f"{r.get('nota', '')} {r.get('score', '')} · R$ {r.get('preco', 0):.2f}")
+    no_grupo = no_grupo_hoje()
+    if GRUPO_DESLIGADO.exists():
+        print("grupo da equipe: a curadora está CALADA lá (pipelinectl grupo on para voltar)")
+    if no_grupo:
+        print(f"no grupo da equipe hoje: {len(no_grupo)} (a última às "
+              f"{time.strftime('%H:%M', time.localtime(no_grupo[-1]['ts']))})")
+    if LOG.exists():
+        ultima = LOG.read_text(encoding="utf-8", errors="replace").splitlines()[-1:]
+        if ultima:
+            print("última linha do log:", ultima[0][:150])
+    return 0
+
+
+def ligar(args) -> int:
+    for nome in ("de", "ate"):
+        valor = getattr(args, nome)
+        if valor and not HORA.match(valor):
+            print(f"horário inválido em --{nome}: {valor!r} (use HH:MM, ex.: 15:00)")
+            return 2
+    agora = time.strftime("%H:%M")
+    if args.ate.zfill(5) <= (args.de.zfill(5) if args.de else agora):
+        print(f"o horário final ({args.ate}) precisa ser depois do início ({args.de or 'agora, ' + agora})")
+        return 2
+    if processos():
+        print("já está ligado; para mudar o horário, desligue antes (pipelinectl off)")
+        return status() or 1
+    PARAR.unlink(missing_ok=True)
+    DADOS.mkdir(parents=True, exist_ok=True)
+    comando = [sys.executable, str(RAIZ / "pipeline.py"), "--ate", args.ate, "--quantas", str(args.quantas),
+               "--intervalo-min", str(args.intervalo_min), "--fila-max", str(args.fila_max)]
+    if args.de:
+        comando += ["--de", args.de]
+    # Solto do terminal de quem chamou (ssh, Hermes): continua rodando depois que o comando volta.
+    with LOG.open("ab") as saida:
+        subprocess.Popen(comando, cwd=RAIZ, stdin=subprocess.DEVNULL, stdout=saida, stderr=saida, start_new_session=True)
+    for _ in range(20):          # espera subir (ou falhar) para responder com certeza
+        time.sleep(0.5)
+        if estado().get("pid") in processos():
+            break
+    if not processos():
+        print("não subiu; fim do log:")
+        print("\n".join(LOG.read_text(encoding="utf-8", errors="replace").splitlines()[-5:]))
+        return 1
+    print(f"ligado: {'das ' + args.de + ' ' if args.de else 'de agora '}até {args.ate}")
+    return status()
+
+
+def desligar() -> int:
+    pids = processos()
+    if not pids:
+        PARAR.unlink(missing_ok=True)
+        print("já estava desligado")
+        return 0
+    PARAR.touch()                # o pipeline para sozinho, sem cortar um envio no meio
+    for _ in range(30):
+        time.sleep(1)
+        if not processos():
+            break
+    for pid in processos():      # preso esperando o Gerador responder: encerra
+        try:
+            os.kill(pid, 15)
+        except OSError:
+            pass
+    time.sleep(1)
+    PARAR.unlink(missing_ok=True)
+    ESTADO.unlink(missing_ok=True)
+    print("desligado" if not processos() else "não consegui desligar: " + str(processos()))
+    return status()
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd")
+    on = sub.add_parser("on", help="liga")
+    on.add_argument("--de", default="", help="horário de início HH:MM (vazio = agora)")
+    on.add_argument("--ate", default="22:00", help="horário final HH:MM")
+    on.add_argument("--quantas", type=int, default=200, help="máximo de promos na rodada")
+    on.add_argument("--intervalo-min", type=float, default=4)
+    on.add_argument("--fila-max", type=int, default=0, help="0 = nunca espera a equipe (padrão)")
+    sub.add_parser("off", help="desliga")
+    sub.add_parser("status", help="como está")
+    grupo = sub.add_parser("grupo", help="a curadora no grupo da equipe: on | off")
+    grupo.add_argument("acao", choices=("on", "off"))
+    args = ap.parse_args()
+    if args.cmd == "grupo":
+        if args.acao == "off":
+            GRUPO_DESLIGADO.parent.mkdir(parents=True, exist_ok=True)
+            GRUPO_DESLIGADO.touch()
+            print("a curadora parou de falar no grupo da equipe (vale na hora; o pipeline continua)")
+        else:
+            GRUPO_DESLIGADO.unlink(missing_ok=True)
+            print("a curadora volta a falar no grupo da equipe enquanto o pipeline roda")
+        return 0
+    if args.cmd == "on":
+        return ligar(args)
+    if args.cmd == "off":
+        return desligar()
+    return status()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

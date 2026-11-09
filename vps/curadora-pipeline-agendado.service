@@ -1,0 +1,12 @@
+[Unit]
+Description=Curadora: liga o pipeline no horario marcado pelo Breno (18/10, 15:30 as 22:00)
+
+[Service]
+Type=oneshot
+KillMode=process
+WorkingDirectory=/home/ubuntu/curadora
+# A normalizadora ja sobe com a janela de fim de semana (08:50); liga de novo por garantia.
+ExecStartPre=-/home/ubuntu/.hermes/scripts/perfume_normalizer_ctl.sh on
+# No horario do pipeline a curadora substitui a coletora no grupo (ok do Breno em 16/10).
+ExecStartPre=-/bin/sh /home/ubuntu/curadora/vps/pausar_coletora.sh
+ExecStart=/home/ubuntu/curadora/pipelinectl on --ate 22:00

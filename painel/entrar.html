@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curadora · entrar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #f6f4f0; --surface: #fff; --ink: #1d1b18; --ink-2: #5f5a52; --ink-3: #9a948a; --line: #e6e1d8; --gold: #a8773a; --erro: #c2410c; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #131210; --surface: #1c1b18; --ink: #f3efe8; --ink-2: #b3ada3; --ink-3: #7d776e; --line: #2f2d29; --gold: #d4a466; --erro: #fb8a4c; }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  display: grid; place-items: center; padding: 16px; -webkit-font-smoothing: antialiased; }
+.caixa { width: min(380px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 32px 28px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.06); }
+h1 { margin: 0; font: 600 30px/1 Fraunces, Georgia, serif; letter-spacing: -.01em; }
+.sub { color: var(--ink-3); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; margin: 6px 0 24px; }
+p { color: var(--ink-2); margin: 0 0 18px; }
+label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-2); margin: 14px 0 6px; }
+input { width: 100%; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 11px; padding: 11px 13px;
+  font: inherit; font-size: 15px; outline: none; }
+input:focus { border-color: var(--gold); }
+#codigo { text-transform: uppercase; font-family: ui-monospace, Consolas, monospace; letter-spacing: .06em; }
+.com-olho { position: relative; }
+.com-olho input { padding-right: 46px; }
+.olho { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); width: 36px; height: 36px; margin: 0; padding: 0;
+  display: grid; place-items: center; background: transparent; border: 0; border-radius: 8px; color: var(--ink-3); cursor: pointer; }
+.olho:hover, .olho:focus-visible { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.olho svg { width: 20px; height: 20px; }
+button { width: 100%; margin-top: 22px; border: 0; border-radius: 11px; padding: 12px; background: var(--ink); color: var(--bg);
+  font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
+button:disabled { opacity: .6; cursor: wait; }
+button.secundario { margin-top: 12px; background: transparent; color: var(--ink); border: 1px solid var(--line); }
+#ir-painel { margin-top: 10px; }
+.erro { color: var(--erro); font-size: 13px; margin-top: 12px; min-height: 1em; }
+.dica { color: var(--ink-3); font-size: 12px; margin-top: 18px; text-align: center; }
+.link { display: block; margin-top: 14px; text-align: center; color: var(--ink-2); font-size: 14px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px; }
+.codigo { margin: 4px 0 6px; padding: 14px; border: 1.5px dashed var(--gold); border-radius: 12px; text-align: center;
+  font: 600 22px/1.2 ui-monospace, Consolas, monospace; letter-spacing: .08em; user-select: all; }
+</style>
+</head>
+<body>
+<form class="caixa" id="form" autocomplete="on">
+  <h1>Curadora</h1>
+  <div class="sub">perfumes</div>
+  <div id="campos">
+    <p id="texto">Entre com seu nome e senha.</p>
+    <div id="campo-nome">
+      <label for="nome">Nome</label>
+      <input id="nome" name="username" autocomplete="username" autocapitalize="none" required>
+    </div>
+    <div id="campo-codigo" hidden>
+      <label for="codigo">Código de recuperação</label>
+      <input id="codigo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX">
+    </div>
+    <label for="senha" id="rotulo-senha">Senha</label>
+    <div class="com-olho">
+      <input id="senha" name="password" type="password" autocomplete="current-password" required>
+      <button type="button" class="olho" data-alvo="senha" aria-label="Mostrar senha" title="Mostrar senha"></button>
+    </div>
+    <div id="campo-repetir" hidden>
+      <label for="senha2">Repita a senha</label>
+      <div class="com-olho">
+        <input id="senha2" type="password" autocomplete="new-password">
+        <button type="button" class="olho" data-alvo="senha2" aria-label="Mostrar senha" title="Mostrar senha"></button>
+      </div>
+    </div>
+    <button id="botao" type="submit">Entrar</button>
+    <div class="erro" id="erro" role="alert"></div>
+    <a class="link" id="trocar-modo" href="/entrar?recuperar=1">Esqueci a senha</a>
+    <div class="dica" id="dica">Não tem acesso? Peça um link para o Breno.</div>
+  </div>
+  <div id="tela-codigo" hidden>
+    <p><b>Guarde seu código de recuperação.</b> Se esquecer a senha, é com ele que você cria outra sozinho, em “Esqueci a senha”.
+      Anote ou salve nas notas do celular: ele não aparece de novo.</p>
+    <div class="codigo" id="codigo-novo"></div>
+    <button type="button" class="secundario" id="copiar-codigo">Copiar código</button>
+    <button type="button" id="ir-painel">Já guardei, entrar no painel</button>
+  </div>
+</form>
+<script>
+const $ = (s) => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const convite = params.get("convite");
+const recuperando = !convite && params.has("recuperar");
+
+// Olhinho: mostra/esconde a senha.
+const OLHO = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const OLHO_FECHADO = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>`;
+document.querySelectorAll(".olho").forEach((b) => {
+  b.innerHTML = OLHO;
+  b.onclick = () => {
+    const campo = document.getElementById(b.dataset.alvo);
+    const mostrar = campo.type === "password";
+    campo.type = mostrar ? "text" : "password";
+    b.innerHTML = mostrar ? OLHO_FECHADO : OLHO;
+    b.setAttribute("aria-label", mostrar ? "Esconder senha" : "Mostrar senha");
+    b.title = b.getAttribute("aria-label");
+    campo.focus();
+  };
+});
+
+async function enviar(caminho, dados) {
+  const r = await fetch(caminho, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(dados)});
+  return r.json();
+}
+
+// Senha criada ou trocada: mostra o código de recuperação uma vez, antes de entrar no painel.
+function mostrarCodigo(codigo) {
+  $("#campos").hidden = true;
+  $("#tela-codigo").hidden = false;
+  $("#codigo-novo").textContent = codigo;
+  $("#ir-painel").focus();
+}
+$("#copiar-codigo").onclick = async (e) => {
+  const botao = e.currentTarget;
+  try { await navigator.clipboard.writeText($("#codigo-novo").textContent); botao.textContent = "✓ Copiado"; }
+  catch (err) { getSelection().selectAllChildren($("#codigo-novo")); }  // sem permissão: deixa selecionado
+};
+$("#ir-painel").onclick = () => { location.href = "/"; };
+
+if (convite) {
+  // Modo convite: a própria pessoa cria a senha. O campo nome some e deixa de ser obrigatório
+  // (campo escondido + obrigatório faz o navegador barrar o envio sem avisar nada).
+  $("#campo-nome").hidden = true;
+  $("#nome").required = false;
+  $("#campo-repetir").hidden = false;
+  $("#senha").autocomplete = "new-password";
+  $("#botao").textContent = "Criar minha senha e entrar";
+  $("#trocar-modo").hidden = true;
+  $("#dica").textContent = "Use pelo menos 8 caracteres. Só você vai saber esta senha.";
+  fetch(`/api/convite?t=${encodeURIComponent(convite)}`).then((r) => r.json()).then((c) => {
+    if (c.erro) { $("#texto").textContent = c.erro; $("#botao").disabled = true; return; }
+    $("#texto").innerHTML = `Olá, <b></b>! Crie sua senha para entrar no painel.`;
+    $("#texto b").textContent = c.nome;
+  });
+} else if (recuperando) {
+  // Esqueci a senha: nome + código de recuperação + senha nova.
+  $("#texto").textContent = "Digite seu nome, o código de recuperação e a senha nova.";
+  $("#campo-codigo").hidden = false;
+  $("#codigo").required = true;
+  $("#rotulo-senha").textContent = "Senha nova";
+  $("#senha").autocomplete = "new-password";
+  $("#campo-repetir").hidden = false;
+  $("#botao").textContent = "Trocar a senha e entrar";
+  $("#trocar-modo").textContent = "Voltar para entrar";
+  $("#trocar-modo").href = "/entrar";
+  $("#dica").textContent = "Sem o código? Peça um link novo para o Breno.";
+}
+
+$("#form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("#erro").textContent = "";
+  const b = $("#botao"); b.disabled = true;
+  try {
+    let r;
+    if ((convite || recuperando) && $("#senha").value !== $("#senha2").value) {
+      $("#erro").textContent = "As senhas não são iguais."; return;
+    }
+    if (convite) {
+      r = await enviar("/api/convite", {token: convite, senha: $("#senha").value});
+    } else if (recuperando) {
+      r = await enviar("/api/recuperar", {nome: $("#nome").value, codigo: $("#codigo").value, senha: $("#senha").value});
+    } else {
+      r = await enviar("/api/entrar", {nome: $("#nome").value, senha: $("#senha").value});
+    }
+    if (r.erro) { $("#erro").textContent = r.erro; return; }
+    if (r.codigo) { mostrarCodigo(r.codigo); return; }
+    location.href = "/";
+  } catch (err) {
+    $("#erro").textContent = "Não consegui falar com o painel. Tente de novo.";
+  } finally { b.disabled = false; }
+});
+</script>
+</body>
+</html>

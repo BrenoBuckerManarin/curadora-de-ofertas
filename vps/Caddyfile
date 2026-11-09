@@ -1,0 +1,26 @@
+# Caddy na VPS: HTTPS automático (Let's Encrypt) na frente do painel da curadora.
+# O painel em Python continua escutando só em 127.0.0.1:8765; daqui para fora é tudo pelo Caddy.
+# Instalar em /etc/caddy/Caddyfile e: sudo systemctl reload caddy
+
+curadora.exemplo.com {
+	encode zstd gzip
+
+	# Pedidos grandes demais não chegam no painel.
+	request_body {
+		max_size 1MB
+	}
+
+	reverse_proxy 127.0.0.1:8765 {
+		# Se o painel travar, o Caddy desiste rápido em vez de segurar conexões.
+		transport http {
+			dial_timeout 5s
+			response_header_timeout 30s
+		}
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+	# Registro de acessos: journalctl -u caddy (padrão do Caddy, sem arquivo próprio).
+}

@@ -1,0 +1,152 @@
+{
+ "id": "card-featured",
+ "type": "recommendations",
+ "recommendation_data": {
+  "recommendation_info": {
+   "polycards": [
+    {
+     "unique_id": "h-ltKF3flnhPuJXmOzhXuCYUSrrA187zM3n7Q0D30T8",
+     "metadata": {
+      "id": "MLB3946172085",
+      "user_product_id": "MLBU2927448939",
+      "pid": "MLBU2927448939",
+      "pid_extended": "MLBU2927448939_MLB3946172085",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-lattafa-asad-100ml-eau-de-parfum-original-arabe-original-com-nota-fiscal-e-selo-original-lataffa/up/MLBU2927448939",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate-profile&wid=MLB3946172085&sid=recos&reco_backend=item_decorator&reco_client=home_affiliate-profile&matt_tool_id=30772056&reco_item_pos=0&source=affiliate-profile&reco_backend_type=function&reco_id=6ac2d359-7f87-4d3f-92b7-bc74b4bbde51&tracking_id=6c8cafab-5c8f-4565-9495-6d2f6555299b&c_id=/home/card-featured/element&c_uid=4b64c8dc-ab22-4409-866b-2bd6be36dfc2",
+      "url_params": "",
+      "tracks": {
+       "price": {
+        "promotions": [
+         {
+          "campaigns": [
+           {
+            "id": "12887707",
+            "type": "PIX"
+           }
+          ],
+          "type": "price_decrement",
+          "campaign_id": "12887707"
+         }
+        ],
+        "price": 177.65
+       }
+      },
+      "card_type": "list-multicolumn",
+      "category_id": "MLB6284"
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "687418-MLB81527468562_012025"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Lattafa Asad 100ml Eau De Parfum Original Árabe Original Com Nota Fiscal E Selo Original Lataffa",
+        "long_title": false
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "column": 1,
+       "price": {
+        "previous_price": {
+         "value": 289.99,
+         "currency": "BRL",
+         "decimal_style": "normal"
+        },
+        "current_price": {
+         "value": 177.65,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "discount_label": {
+         "text": "38% OFF no Pix"
+        },
+        "installments": {
+         "text": "ou {price_total} em outros meios",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price_total",
+           "type": "price",
+           "price": {
+            "value": 209,
+            "currency": "BRL"
+           },
+           "styles": {
+            "color": "primary"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "column": 1,
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [
+         {
+          "key": "vpp_full_icon",
+          "type": "icon",
+          "icon": {
+           "key": "vpp_full_icon",
+           "alt_text": "Enviado pelo FULL",
+           "icon_id": "vpp_full_icon"
+          }
+         }
+        ],
+        "promise_type": "none",
+        "icon": {
+         "key": "vpp_full_icon",
+         "alt_text": "Enviado pelo FULL",
+         "icon_id": "vpp_full_icon"
+        },
+        "additional_text": "por ser sua primeira compra"
+       }
+      },
+      {
+       "type": "action_links",
+       "id": "action_links",
+       "column": 2,
+       "action_links": [
+        {
+         "id": "show_product",
+         "type": "link",
+         "text": "Ir para produto",
+         "url": "https://www.mercadolivre.com.br/perfume-lattafa-asad-100ml-eau-de-parfum-original-arabe-original-com-nota-fiscal-e-selo-original-lataffa/up/MLBU2927448939"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "affiliateName": "FONTE DELTA"
+  }
+ }
+}

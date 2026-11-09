@@ -1,0 +1,676 @@
+{
+ "id": "affiliate-profile-recommendations",
+ "type": "recommendations",
+ "recommendation_data": {
+  "recommendation_info": {
+   "polycards": [
+    {
+     "unique_id": "nFS-E9P6mgxu-yJ3oPkOl8KIQcq-P96oU-g4gjoXy18",
+     "metadata": {
+      "id": "MLB4807814885",
+      "product_id": "MLB54537557",
+      "user_product_id": "MLBU4137574149",
+      "pid": "MLBP54537557",
+      "pid_extended": "MLBP54537557_MLB4807814885",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-arabe-mawwal-malek-100ml-eau-de-parfum-unissex/p/MLB54537557",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=0&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB4807814885&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=916f852c-8a22-464f-8b0c-017a287ffa7e",
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "640300-MLA108034565348_032026"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "MAWWAL"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Arabe Mawwal Malek 100ml Eau De Parfum Unissex",
+        "long_title": false
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "current_price": {
+         "value": 209.99,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "installments": {
+         "text": "12x {price}",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price",
+           "type": "price",
+           "price": {
+            "value": 20.79,
+            "currency": "BRL"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [],
+        "promise_type": "none",
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    },
+    {
+     "unique_id": "VJxjDt-PM1t9FCReAoAcTP3iYIToubaubMCKcpxaGno",
+     "metadata": {
+      "id": "MLB7630593068",
+      "product_id": "MLB66942598",
+      "user_product_id": "MLBU5149572837",
+      "pid": "MLBP66942598",
+      "pid_extended": "MLBP66942598_MLB7630593068",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-arabe-mawwal-athar-100ml-eau-de-parfum-masculino/p/MLB66942598",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=1&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB7630593068&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=fdde4982-aedb-4a8e-b4d3-59e0194d1438",
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "912774-MLA108368286474_032026"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "MAWWAL"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Árabe Mawwal Athar 100ml Eau De Parfum Masculino",
+        "long_title": false
+       }
+      },
+      {
+       "type": "seller",
+       "id": "seller",
+       "seller": {
+        "text": "Por WATHIQ PARFUMS {icon_cockade}",
+        "values": [
+         {
+          "key": "icon_cockade",
+          "type": "icon",
+          "icon": {
+           "key": "icon_cockade",
+           "alt_text": "Loja oficial",
+           "icon_id": "icon_cockade"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "previous_price": {
+         "value": 349.9,
+         "currency": "BRL",
+         "decimal_style": "normal"
+        },
+        "current_price": {
+         "value": 229.9,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "discount_label": {
+         "text": "34% OFF",
+         "styles": {
+          "color_hex": "#FFFFFF",
+          "background_color_hex": "#00A650"
+         }
+        },
+        "installments": {
+         "text": "12x {price}",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price",
+           "type": "price",
+           "price": {
+            "value": 22.76,
+            "currency": "BRL"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [
+         {
+          "key": "vpp_full_icon",
+          "type": "icon",
+          "icon": {
+           "key": "vpp_full_icon",
+           "alt_text": "Enviado pelo FULL",
+           "icon_id": "vpp_full_icon"
+          }
+         }
+        ],
+        "promise_type": "none",
+        "icon": {
+         "key": "vpp_full_icon",
+         "alt_text": "Enviado pelo FULL",
+         "icon_id": "vpp_full_icon"
+        },
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    },
+    {
+     "unique_id": "B4i-TBUe6FuyX4zgci9iCoa-IVtC6GNYN96aYiDewi4",
+     "metadata": {
+      "id": "MLB7686316606",
+      "user_product_id": "MLBU5241004969",
+      "pid": "MLBU5241004969",
+      "pid_extended": "MLBU5241004969_MLB7686316606",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-lattafa-liam-100ml/up/MLBU5241004969",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=2&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB7686316606&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=87a9f7b6-cc02-407d-92e7-c5abc7d009d7",
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "989858-MLB118274932467_092026"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "LATTAFA"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Lattafa Liam 100ml",
+        "long_title": false
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "current_price": {
+         "value": 329,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "installments": {
+         "text": "12x {price}",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price",
+           "type": "price",
+           "price": {
+            "value": 32.18,
+            "currency": "BRL"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [],
+        "promise_type": "none",
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    },
+    {
+     "unique_id": "ZlECfMVEnSMcEiw9T9vOOS3BdZnwN9BXN07HB0UdCBk",
+     "metadata": {
+      "id": "MLB5276814985",
+      "product_id": "MLB79428970",
+      "user_product_id": "MLBU4900078407",
+      "pid": "MLBP79428970",
+      "pid_extended": "MLBP79428970_MLB5276814985",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-arabe-mawwal-charm-exir-masculino-100ml/p/MLB79428970",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=3&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB5276814985&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=b466e89f-65ee-45dc-a777-454fe262e5a4",
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "811529-MLA116270545830_092026"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "MAWWAL"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Árabe Mawwal Charm Exir Masculino 100ml",
+        "long_title": false
+       }
+      },
+      {
+       "type": "seller",
+       "id": "seller",
+       "seller": {
+        "text": "Por Mawwal {icon_cockade}",
+        "values": [
+         {
+          "key": "icon_cockade",
+          "type": "icon",
+          "icon": {
+           "key": "icon_cockade",
+           "alt_text": "Loja oficial",
+           "icon_id": "icon_cockade"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "previous_price": {
+         "value": 369.9,
+         "currency": "BRL",
+         "decimal_style": "normal"
+        },
+        "current_price": {
+         "value": 261.8,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "discount_label": {
+         "text": "29% OFF",
+         "styles": {
+          "color_hex": "#FFFFFF",
+          "background_color_hex": "#00A650"
+         }
+        },
+        "installments": {
+         "text": "6x {price} sem juros",
+         "no_interest": true,
+         "values": [
+          {
+           "key": "price",
+           "type": "price",
+           "price": {
+            "value": 43.63,
+            "currency": "BRL"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [],
+        "promise_type": "none",
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    },
+    {
+     "unique_id": "Z4LThRWPC2OVzqLyKFpzKcGFTQqZ_WPGceU4OX6557o",
+     "metadata": {
+      "id": "MLB5311223725",
+      "product_id": "MLB23089155",
+      "user_product_id": "MLBU5346394168",
+      "pid": "MLBP23089155",
+      "pid_extended": "MLBP23089155_MLB5311223725",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-arabe-lattafa-confidential-private-gold-unissex-100ml/p/MLB23089155",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=4&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB5311223725&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=3332d398-cc9a-471f-8fe4-ac4b9b4ba940",
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "837396-MLU69500988247_052023"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "LATTAFA"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Árabe Lattafa Confidential Private Gold - Unissex - 100ml",
+        "long_title": false
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "current_price": {
+         "value": 181,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "installments": {
+         "text": "12x {price}",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price",
+           "type": "price",
+           "price": {
+            "value": 17.92,
+            "currency": "BRL"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "last_available",
+       "id": "last_available",
+       "last_available": {
+        "text": "Último disponível"
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [],
+        "promise_type": "none",
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    },
+    {
+     "unique_id": "SQCdYXlDeNeqD5PNG2yL_1gH6J3PmbF6Jwx_YjWtJhE",
+     "metadata": {
+      "id": "MLB4549612955",
+      "product_id": "MLB66791914",
+      "user_product_id": "MLBU3843365247",
+      "pid": "MLBP66791914",
+      "pid_extended": "MLBP66791914_MLB4549612955",
+      "pid_version": "0.5.0",
+      "url": "www.mercadolivre.com.br/perfume-arabe-the-kingdom-eau-de-parfum-lattafa-100ml-para-homens-masculino/p/MLB66791914",
+      "url_fragments": "#polycard_client=recommendations_home_affiliate_profile_v2p-recommendations&reco_backend=ranker_retrieval_system_vpp_v2p&reco_model=fallback_organicos_deduplication&reco_client=home_affiliate_profile_v2p-recommendations&matt_tool_id=30772056&reco_item_pos=5&source=affiliate-profile&reco_backend_type=low_level&reco_id=6e2cc257-0d09-4b16-b636-21d5e5f8f36c&tracking_id=9376945e-d4ee-4fbf-9534-4c8390599f7e&wid=MLB4549612955&sid=recos&c_id=/home/affiliate-profile-recommendations/element&c_uid=d87ef9ab-64e8-41c4-b207-3790e08423ed",
+      "tracks": {
+       "price": {
+        "promotions": [
+         {
+          "campaigns": [
+           {
+            "id": "12887683",
+            "type": "PIX"
+           }
+          ],
+          "type": "price_decrement",
+          "campaign_id": "12887683"
+         }
+        ],
+        "price": 193.72
+       }
+      },
+      "card_type": "list",
+      "category_id": "MLB6284",
+      "url_params": ""
+     },
+     "pictures": {
+      "scale": "FILL",
+      "pictures": [
+       {
+        "id": "818933-MLA115167916633_072026"
+       }
+      ],
+      "square": "Q",
+      "alt_text": "Imagem",
+      "overlay": true,
+      "ratio": "1"
+     },
+     "components": [
+      {
+       "type": "highlight",
+       "id": "highlight",
+       "highlight": {
+        "text": "MAIS VENDIDO",
+        "styles": {
+         "color_hex": "#FFFFFF",
+         "background_color_hex": "#FF7733"
+        }
+       }
+      },
+      {
+       "type": "brand",
+       "id": "brand",
+       "brand": {
+        "text": "LATTAFA"
+       }
+      },
+      {
+       "type": "title",
+       "id": "title",
+       "title": {
+        "text": "Perfume Árabe The Kingdom Eau De Parfum Lattafa 100ml Para Homens Masculino",
+        "long_title": false
+       }
+      },
+      {
+       "type": "seller",
+       "id": "seller",
+       "seller": {
+        "text": "Por Lipx {icon_cockade}",
+        "values": [
+         {
+          "key": "icon_cockade",
+          "type": "icon",
+          "icon": {
+           "key": "icon_cockade",
+           "alt_text": "Loja oficial",
+           "icon_id": "icon_cockade"
+          }
+         }
+        ]
+       }
+      },
+      {
+       "type": "price",
+       "id": "price",
+       "price": {
+        "previous_price": {
+         "value": 299.8,
+         "currency": "BRL",
+         "decimal_style": "normal"
+        },
+        "current_price": {
+         "value": 193.72,
+         "currency": "BRL",
+         "decimal_style": "superscript"
+        },
+        "discount_label": {
+         "text": "35% OFF no Pix"
+        },
+        "installments": {
+         "text": "ou {price_total} em outros meios",
+         "no_interest": false,
+         "values": [
+          {
+           "key": "price_total",
+           "type": "price",
+           "price": {
+            "value": 215.24,
+            "currency": "BRL"
+           },
+           "styles": {
+            "color": "primary"
+           }
+          }
+         ]
+        }
+       }
+      },
+      {
+       "type": "shipping",
+       "id": "shipping",
+       "shipping": {
+        "text": "Frete grátis",
+        "values": [
+         {
+          "key": "vpp_full_icon",
+          "type": "icon",
+          "icon": {
+           "key": "vpp_full_icon",
+           "alt_text": "Enviado pelo FULL",
+           "icon_id": "vpp_full_icon"
+          }
+         }
+        ],
+        "promise_type": "none",
+        "icon": {
+         "key": "vpp_full_icon",
+         "alt_text": "Enviado pelo FULL",
+         "icon_id": "vpp_full_icon"
+        },
+        "additional_text": "por ser sua primeira compra"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

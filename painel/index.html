@@ -1,0 +1,1478 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curadora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Texto com contraste de pelo menos 4,5:1 (WCAG AA) sobre os fundos em que aparece. */
+  --bg: #f6f4f0; --surface: #ffffff; --surface-2: #f2efe9; --ink: #1d1b18; --ink-2: #5f5a52; --ink-3: #706b64;
+  --line: #e6e1d8; --gold: #8b6330; --gold-soft: #f6eddf;
+  --exc: #bf400c; --exc-soft: #fdece2; --boa: #2e794d; --boa-soft: #e4f3e9; --on-boa: #ffffff;
+  --med: #946219; --med-soft: #fbf1df; --ruim: #6f6b65; --ruim-soft: #f1efec;
+  --cupom: #946219; --ml: #2563eb; --sem: #0f766e;
+  --shadow: 0 1px 2px rgba(29,27,24,.04), 0 6px 20px rgba(29,27,24,.05);
+  --radius: 16px;
+}
+/* Tema escuro: automático (segue o sistema) ou escolhido nas configurações. */
+:root[data-theme="dark"] {
+  --bg: #131210; --surface: #1c1b18; --surface-2: #25231f; --ink: #f3efe8; --ink-2: #b3ada3; --ink-3: #908b83; --on-boa: #131210;
+  --line: #2f2d29; --gold: #d4a466; --gold-soft: #2c241a;
+  --exc: #fb8a4c; --exc-soft: #3a2116; --boa: #5cc48a; --boa-soft: #18301f;
+  --med: #e0a94a; --med-soft: #33281a; --ruim: #8f8a83; --ruim-soft: #232220;
+  --cupom: #e0a94a; --ml: #6ea8fe; --sem: #4fd1c5;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #131210; --surface: #1c1b18; --surface-2: #25231f; --ink: #f3efe8; --ink-2: #b3ada3; --ink-3: #908b83; --on-boa: #131210;
+    --line: #2f2d29; --gold: #d4a466; --gold-soft: #2c241a;
+    --exc: #fb8a4c; --exc-soft: #3a2116; --boa: #5cc48a; --boa-soft: #18301f;
+    --med: #e0a94a; --med-soft: #33281a; --ruim: #8f8a83; --ruim-soft: #232220;
+    --cupom: #e0a94a; --ml: #6ea8fe; --sem: #4fd1c5;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+/* Tema "Noite dourada": escuro com mais contraste e dourado em destaque. */
+:root[data-theme="noite"] {
+  --bg: #0e0d0b; --surface: #171511; --surface-2: #211e18; --ink: #f6eedf; --ink-2: #c2b59c; --ink-3: #918673; --on-boa: #0e0d0b;
+ --line: #2c271f; --gold: #e2b56b; --gold-soft: #2e2416;
+  --exc: #ff9a5c; --exc-soft: #3b2214; --boa: #7fd69f; --boa-soft: #16301f;
+  --med: #e9b75b; --med-soft: #33281a; --ruim: #918777; --ruim-soft: #1f1c17;
+  --cupom: #e9b75b; --ml: #7fb0ff; --sem: #5fd8cb;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+}
+/* Densidade compacta: mais promos por tela. */
+body.compacto .card { padding: 11px 12px 10px; gap: 7px; }
+body.compacto .foto { width: 52px; height: 52px; }
+body.compacto .preco { font-size: 19px; }
+body.compacto .card-acoes { padding-top: 7px; }
+
+/* configurações */
+.config-wrap { position: relative; }
+.config { position: absolute; right: 0; top: calc(100% + 8px); width: 300px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,.18); padding: 8px; z-index: 25; display: none;
+  /* 20/10 (Breno: "não consigo ler isso inteiro nem rolar"): o topo é fixo e a página não leva o menu junto;
+     mais alto que a tela (o admin vê também Equipe e Fontes), ele rola por dentro. */
+  max-height: calc(100vh - 90px); max-height: calc(100dvh - 90px); overflow-y: auto; overscroll-behavior: contain; }
+.config.aberta { display: block; }
+.config h5 { margin: 8px 10px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); font-weight: 600; }
+.config .linha { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px; border-radius: 10px; font-size: 13.5px; }
+.config .linha:hover { background: var(--surface-2); }
+.segmento { display: flex; background: var(--surface-2); border-radius: 10px; padding: 3px; gap: 2px; margin: 0 6px 6px; }
+.segmento button { flex: 1; border: 0; background: transparent; padding: 7px 4px; border-radius: 8px; font-size: 12.5px; color: var(--ink-2); }
+.segmento button.on { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.interruptor { position: relative; width: 38px; height: 22px; border-radius: 99px; background: var(--line); border: 0; flex: none; transition: background .15s; }
+.interruptor::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff;
+  transition: transform .15s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.interruptor.on { background: var(--boa); }
+.interruptor.on::after { transform: translateX(16px); }
+.fontes { padding: 2px 10px 8px; display: flex; flex-direction: column; gap: 9px; }
+.fonte { display: grid; grid-template-columns: 10px 1fr; gap: 9px; font-size: 13px; line-height: 1.35; }
+.fonte i { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; background: var(--ink-3); }
+.fonte i.ok { background: #22c55e; }
+.fonte small { display: block; color: var(--ink-3); font-size: 12px; }
+.config select { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 8px; padding: 5px 8px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; }
+/* O atributo hidden sempre esconde (antes ".btn { display: inline-flex }" ganhava dele e o "Aplicar ajuste" aparecia à toa). */
+[hidden] { display: none !important; }
+/* Foco visível para quem usa teclado. */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+.num { font-variant-numeric: tabular-nums; }
+/* Ícones de linha desenhados no próprio HTML (sem CDN). Traço do Lucide (licença ISC). */
+.ico { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.btn .ico { width: 16px; height: 16px; }
+.sino .ico { width: 18px; height: 18px; }
+.quem .ico, .pct .ico { width: 13px; height: 13px; vertical-align: -2px; margin-right: 3px; }
+.busca .ico { width: 16px; height: 16px; color: var(--ink-3); }
+.config button.linha .ico { margin-right: 8px; vertical-align: -4px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 560px) { .wrap { padding: 0 16px; } }
+
+/* topo */
+header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.topo { display: flex; align-items: center; gap: 14px; padding-top: 14px; padding-bottom: 14px; }
+.marca { display: flex; align-items: baseline; gap: 10px; margin-right: auto; }
+.marca h1 { margin: 0; font: 600 23px/1 Fraunces, Georgia, serif; letter-spacing: -.01em; }
+.marca span { color: var(--ink-3); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; }
+.estado { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 99px;
+  background: var(--surface); border: 1px solid var(--line); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+.ponto { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.ponto.vivo { background: #22c55e; animation: pulso 1.8s infinite; }
+@keyframes pulso { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.45); } 70% { box-shadow: 0 0 0 7px rgba(34,197,94,0); } 100% { box-shadow: none; } }
+.btn { border: 1px solid var(--line); background: var(--surface); padding: 9px 15px; border-radius: 11px; font-weight: 600;
+  font-size: 13.5px; display: inline-flex; align-items: center; gap: 7px; text-decoration: none; color: var(--ink);
+  transition: background-color .15s, border-color .15s, color .15s, opacity .15s; }
+.btn:hover { border-color: var(--ink-3); }
+.btn.forte { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.forte:hover { opacity: .9; }
+.btn.copiado { background: var(--boa); border-color: var(--boa); color: var(--on-boa); }
+@media (max-width: 560px) { .longo { display: none; } .marca span { display: none; } .btn { white-space: nowrap; } }
+/* celular: o topo cabe na tela (som e alertas por produto ficam no ⚙; o ponto verde continua dizendo "ao vivo") */
+@media (max-width: 560px) {
+  .topo { gap: 10px; }
+  .estado { padding: 0; border: 0; background: none; }
+  .estado #modo { display: none; }
+}
+.config .linha.so-celular { display: none; }
+@media (max-width: 560px) { .config .linha.so-celular { display: flex; } }
+.config button.linha { width: 100%; border: 0; background: none; color: var(--ink); text-align: left; font-weight: 600; }
+/* celular: na gaveta, Copiar e Abrir numa linha e 👍 👎 juntos na de baixo */
+@media (max-width: 560px) {
+  .gaveta .g-acoes { display: grid; grid-template-columns: 1fr 1fr; }
+  .gaveta .g-acoes .espaco { display: none; }
+  .gaveta .g-acoes .btn { justify-content: center; }
+  .gaveta .g-acoes .voto { width: 100%; }
+}
+
+/* seções: abas numa linha só, com a contagem (a explicação da seção aberta vai ao lado do título da lista) */
+.secoes { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 4px; margin-top: 16px; padding: 4px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; }
+.secao-btn { border: 0; background: transparent; border-radius: 10px; padding: 9px 12px; display: flex; align-items: center;
+  justify-content: center; gap: 8px; color: var(--ink-2); transition: background .15s, color .15s; }
+.secao-btn:hover { color: var(--ink); }
+.secao-btn .topo-s { display: contents; }
+.secao-btn .rotulo { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; }
+.secao-btn .bola { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.secao-btn .qtd { font-size: 15px; font-weight: 700; color: var(--ink-2); }
+.secao-btn .sub { display: none; }
+.secao-btn.ativa { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.secao-btn.ativa .qtd { color: var(--c); }
+@media (max-width: 560px) {
+  .secao-btn { flex-direction: column; gap: 1px; padding: 7px 2px; }
+  .secao-btn .rotulo { font-size: 12px; gap: 5px; }
+  .secao-btn .qtd { font-size: 18px; line-height: 1.15; order: -1; }
+}
+.s-excelentes { --c: var(--exc); --cs: var(--exc-soft); }
+.s-boas { --c: var(--boa); --cs: var(--boa-soft); }
+.s-medias { --c: var(--med); --cs: var(--med-soft); }
+.s-ruins { --c: var(--ruim); --cs: var(--ruim-soft); }
+
+/* feed */
+.cabeca-feed { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 26px 0 12px; }
+.cabeca-feed h2 { margin: 0; font: 600 19px/1.2 Fraunces, Georgia, serif; }
+.cabeca-feed h2 small { margin-left: 10px; font: 400 13px/1.3 Inter, system-ui, sans-serif; color: var(--ink-3); }
+@media (max-width: 560px) {
+  .cabeca-feed { flex-wrap: wrap; row-gap: 6px; }
+  .cabeca-feed h2 small:not([hidden]) { display: block; margin: 4px 0 0; }
+}
+.cabeca-feed p { margin: 0; color: var(--ink-3); font-size: 12.5px; }
+.feed { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; padding-bottom: 60px; }
+@media (max-width: 900px) { .feed { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 16px 14px;
+  box-shadow: var(--shadow); cursor: pointer; transition: transform .15s, border-color .15s; display: flex; flex-direction: column; gap: 10px; }
+.card:hover { transform: translateY(-1px); border-color: var(--ink-3); }
+.card.novo { animation: entra .5s ease-out; }
+@keyframes entra { from { opacity: 0; transform: translateY(-8px); } }
+.card-topo { display: flex; gap: 14px; align-items: flex-start; }
+.score { flex: none; min-width: 40px; height: 30px; padding: 0 8px; border-radius: 9px; display: grid; place-items: center;
+  background: var(--cs); color: var(--c); font-weight: 700; font-size: 15px; margin-left: auto; }
+.foto { position: relative; flex: none; width: 72px; height: 72px; border-radius: 12px; background: #fff; border: 1px solid var(--line);
+  display: grid; place-items: center; overflow: hidden; }
+.foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #fff; }
+.foto .inicial { font: 600 26px/1 Fraunces, Georgia, serif; color: var(--gold); }
+.foto.vazia { background: var(--gold-soft); border-color: transparent; }
+.marca-sel { position: absolute; top: 5px; left: 5px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #fff;
+  background: rgba(0,0,0,.25); display: none; place-items: center; color: #fff; font-size: 13px; font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0,0,0,.25); }
+.selecionando .marca-sel { display: grid; }
+.card.sel { outline: 2.5px solid var(--ink); outline-offset: -1px; }
+.card.sel .marca-sel { background: var(--boa); color: var(--on-boa); }
+.selecionando .card { cursor: copy; }
+
+/* barra de seleção */
+.barra-sel { position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 140%); z-index: 15; transition: transform .25s;
+  background: var(--ink); color: var(--bg); border-radius: 16px; padding: 10px 10px 10px 18px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.3); max-width: calc(100vw - 24px); flex-wrap: wrap; }
+.barra-sel { visibility: hidden; transition: transform .25s, visibility 0s linear .25s; }
+.barra-sel.ver { transform: translate(-50%, 0); visibility: visible; transition: transform .25s, visibility 0s; }
+.barra-sel b { font-size: 14px; margin-right: 6px; white-space: nowrap; }
+.barra-sel .btn { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 30%, transparent); padding: 8px 12px; }
+.barra-sel .btn.zap { background: #25d366; border-color: #25d366; color: #0b2e17; }
+.barra-sel .btn.copiado { background: var(--boa); border-color: var(--boa); color: var(--on-boa); }
+.barra-sel .x { background: none; border: 0; color: var(--bg); opacity: .7; font-size: 20px; padding: 0 8px; }
+.tag.postada { background: var(--ink); color: var(--bg); font-weight: 600; }
+.card.foi-postada { opacity: .5; }
+.card.foi-postada .foto { filter: grayscale(1); }
+/* 21/10: Excelente/Boa que o pipeline não mandaria agora (motivo no selo) */
+.tag.trava { background: var(--surface-2); color: var(--ink); font-weight: 600; white-space: normal; }
+.divisor-travadas { grid-column: 1 / -1; margin: 6px 0 0; padding-top: 10px; border-top: 1px solid var(--line);
+  font-size: 12.5px; color: var(--ink-3); }
+.tag.grupofinal { background: var(--ink); color: var(--bg); font-weight: 700; }
+/* sugestão do que postar agora (ritmo de ~7 min) */
+.sugestao { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px;
+  margin: 16px 0 0; box-shadow: var(--shadow); }
+.sug-linha { font-size: 13px; color: var(--ink-2); margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.sug-linha .hora { color: var(--boa); }
+.sug-principal { display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center;
+  border-left: 4px solid var(--c); padding-left: 10px; cursor: pointer; }
+.sug-principal .foto { width: 56px; height: 56px; }
+.sug-principal small { color: var(--ink-3); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.sug-principal .produto { font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sug-info { min-width: 0; }
+.sug-preco { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.sug-preco .preco { font-size: 20px; font-weight: 700; }
+.sug-acoes { grid-column: 1 / -1; display: flex; gap: 8px; }
+.sug-outras { margin-top: 10px; font-size: 12.5px; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.sug-outra { background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px;
+  color: var(--ink-2); cursor: pointer; font: inherit; }
+.sug-vazia { color: var(--ink-3); font-size: 13px; }
+/* alertas por produto */
+.alvo-form { display: grid; grid-template-columns: 1fr 110px auto; gap: 8px; margin: 12px 0 6px; }
+.alvo-form input { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px;
+  color: var(--ink); font: inherit; min-width: 0; }
+.alvo-lista { margin-top: 12px; display: grid; gap: 8px; max-height: 50vh; overflow: auto; }
+.alvo-item { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.alvo-item b { font-weight: 650; }
+.alvo-item small { color: var(--ink-3); grid-column: 1; }
+.alvo-item .btn { grid-row: 1 / span 2; grid-column: 2; }
+.tag.alvo { background: var(--boa); color: var(--on-boa); font-weight: 700; }
+@media (max-width: 640px) { .alvo-form { grid-template-columns: 1fr 90px; } .alvo-form .btn { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .sug-principal { grid-template-columns: auto 1fr auto; }
+  .sug-principal .score { grid-column: 3; grid-row: 1; } .sug-preco { grid-column: 1 / -1; grid-row: 2; } }
+/* celular: as 4 ações da sugestão em duas linhas (antes o "Pular" ficava fora da tela) */
+@media (max-width: 640px) {
+  .sug-acoes { display: grid; grid-template-columns: 1fr 1fr; }
+  .sug-acoes .espaco { display: none; }
+  .sug-acoes .btn { justify-content: center; }
+  .sug-principal .produto { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+}
+.card.foi-postada:hover { opacity: 1; }
+
+/* busca e filtros */
+.ferramentas { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 0 0 14px; }
+.ordem { display: flex; gap: 4px; margin-left: auto; }
+@media (max-width: 640px) { .ordem { margin-left: 0; } }
+.busca { flex: 1 1 220px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 11px; padding: 0 12px; }
+.busca:focus-within { border-color: var(--gold); }
+.busca input { border: 0; outline: none; background: transparent; color: var(--ink); font: inherit; padding: 9px 0; width: 100%; }
+.chip { border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); padding: 8px 12px; border-radius: 99px;
+  font-size: 12.5px; font-weight: 500; transition: background-color .15s, border-color .15s, color .15s; white-space: nowrap; }
+.chip:hover { border-color: var(--ink-3); }
+.chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sino { width: 40px; height: 38px; justify-content: center; padding: 0; font-size: 16px; }
+.sino.on { background: var(--gold-soft); border-color: var(--gold); color: var(--gold); }
+
+/* melhores preços no detalhe */
+.melhores { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.melhores li { display: grid; grid-template-columns: 82px 1fr auto; gap: 10px; font-size: 12.5px; color: var(--ink-2);
+  padding: 6px 10px; border-radius: 8px; background: var(--surface-2); }
+.melhores li b { color: var(--ink); }
+.ajuda-sel { color: var(--ink-3); font-size: 12.5px; }
+.ajuda-sel button { background: none; border: 0; color: var(--ink-2); text-decoration: underline; padding: 0; font-size: 12.5px; }
+@media (hover: none), (pointer: coarse) { .so-mouse { display: none; } }
+#janela-calib small { color: var(--ink-3); font-size: 11.5px; }
+#janela-calib .melhores li { grid-template-columns: 28px 1fr auto; }
+.produto { font-weight: 600; font-size: 15px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+button.produto { background: none; border: 0; padding: 0; margin: 0; text-align: left; color: inherit; width: 100%; }
+.quando { color: var(--ink-3); font-size: 12px; margin-top: 3px; }
+.precos { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.preco { font-size: 24px; font-weight: 700; letter-spacing: -.02em; }
+.pct { font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 7px; background: var(--boa-soft); color: var(--boa); }
+.pct.fraco { background: var(--surface-2); color: var(--ink-3); }
+.normal { color: var(--ink-3); font-size: 12.5px; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 11.5px; padding: 3px 8px; border-radius: 7px; background: var(--surface-2); color: var(--ink-2); white-space: nowrap; }
+.tag.top { background: var(--gold-soft); color: var(--gold); font-weight: 600; }
+.tag.loja-ok { background: var(--boa-soft); color: var(--boa); font-weight: 500; }
+.tag.cupom { background: transparent; border: 1px dashed var(--cupom); color: var(--cupom); font-family: ui-monospace, Consolas, monospace; }
+.tag.aviso { background: var(--exc-soft); color: var(--exc); }
+.tag.cupom.morto { text-decoration: line-through; opacity: .7; }
+.quem { font-size: 12px; color: var(--ink-3); margin-top: -2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.quem.alta { color: var(--boa); }
+.quem.baixa { color: var(--exc); }
+.card-acoes { display: flex; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.card-acoes .btn { padding: 7px 12px; font-size: 13px; }
+.espaco { flex: 1; }
+.voto { width: 40px; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  display: grid; place-items: center; color: var(--ink-2); transition: background-color .15s, border-color .15s, color .15s; }
+.voto .ico { width: 17px; height: 17px; }
+.voto:hover { color: var(--ink); border-color: var(--ink-3); }
+.voto.sim { color: var(--boa); border-color: var(--boa); background: var(--boa-soft); }
+.voto.nao.sim { color: var(--exc); border-color: var(--exc); background: var(--exc-soft); }
+.vazio { grid-column: 1 / -1; text-align: center; padding: 70px 20px; color: var(--ink-3); border: 1.5px dashed var(--line); border-radius: var(--radius); }
+.vazio b { display: block; color: var(--ink-2); font-size: 15px; margin-bottom: 4px; }
+
+/* gaveta e janela */
+.fundo { position: fixed; inset: 0; background: rgba(20,19,17,.4); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 20; }
+.fundo.aberto { opacity: 1; pointer-events: auto; }
+.gaveta { position: fixed; top: 0; right: 0; bottom: 0; width: min(580px, 100vw); background: var(--surface); z-index: 21;
+  transform: translateX(100%); transition: transform .25s ease, visibility 0s linear .25s; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,.14);
+  visibility: hidden; }
+/* Abre já visível (o foco vai para o Fechar na hora); ao fechar, some só depois de deslizar. */
+.gaveta.aberta { transform: none; visibility: visible; transition: transform .25s ease, visibility 0s; }
+.g-topo { padding: 22px 24px 18px; border-bottom: 1px solid var(--line); }
+.g-linha { display: flex; gap: 12px; align-items: flex-start; }
+.g-linha h3 { margin: 0; font-size: 17px; line-height: 1.3; }
+.fechar { margin-left: auto; background: none; border: 0; font-size: 24px; color: var(--ink-3); line-height: 1; padding: 0; width: 40px; height: 40px; flex: none; }
+.g-acoes { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.parte { padding: 18px 24px; border-bottom: 1px solid var(--line); }
+.parte h4 { margin: 0 0 10px; font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); font-weight: 600; }
+.original { white-space: pre-wrap; font-size: 13px; background: var(--surface-2); border-radius: 12px; padding: 12px 14px; margin: 0;
+  max-height: 260px; overflow: auto; font-family: inherit; color: var(--ink); }
+.razoes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.razoes li { display: flex; gap: 8px; font-size: 13px; }
+.razoes li::before { content: "+"; color: var(--boa); font-weight: 700; width: 12px; flex: none; }
+.razoes.ruins li::before { content: "!"; color: var(--exc); }
+.comp { display: grid; grid-template-columns: 86px 1fr 34px; gap: 10px; align-items: center; font-size: 12.5px; margin-bottom: 6px; color: var(--ink-2); }
+.comp .trilho { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+.comp .trilho i { display: block; height: 100%; background: var(--gold); border-radius: 4px; }
+.comp .trilho i.neg { background: var(--exc); }
+.comp b { text-align: right; color: var(--ink); }
+.grafico svg { width: 100%; height: auto; display: block; }
+.legenda { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink-2); margin-top: 8px; }
+.legenda i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+.dica { color: var(--ink-3); font-size: 12px; margin-top: 8px; }
+.ml-box { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+.ml-box b { color: var(--ink); }
+
+.janela { position: fixed; left: 50%; top: 50%; width: min(560px, calc(100vw - 32px)); transform: translate(-50%, -46%) scale(.98);
+  background: var(--surface); border-radius: 20px; z-index: 22; padding: 22px; opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s, visibility 0s linear .2s; box-shadow: 0 20px 60px rgba(0,0,0,.25); visibility: hidden; }
+.janela.aberta { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); visibility: visible;
+  transition: opacity .2s, transform .2s, visibility 0s; }
+.janela h3 { margin: 0 0 4px; font: 600 19px/1.2 Fraunces, Georgia, serif; }
+.janela p { margin: 0 0 14px; color: var(--ink-3); font-size: 13px; }
+textarea { width: 100%; min-height: 200px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  background: var(--bg); color: var(--ink); font: 13.5px/1.5 Inter, system-ui, sans-serif; outline: none; }
+textarea:focus { border-color: var(--gold); }
+.j-rodape { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.check { display: flex; align-items: center; gap: 7px; color: var(--ink-2); font-size: 13px; cursor: pointer; }
+.erro { color: var(--exc); font-size: 13px; margin-top: 8px; min-height: 1em; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 120px); background: var(--ink); color: var(--bg);
+  padding: 12px 18px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.25); z-index: 30; transition: transform .3s;
+  max-width: calc(100vw - 32px); font-weight: 500; }
+.toast.ver { transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topo">
+    <div class="marca"><h1>Curadora</h1><span>perfumes</span></div>
+    <div class="estado"><i class="ponto" id="ponto"></i><span id="modo">conectando…</span></div>
+    <button class="btn sino longo" id="sino" title="Avisar com som quando chegar promo excelente" aria-label="Som quando chegar Excelente"></button>
+    <button class="btn sino longo" id="abrir-alvos" title="Alertas por produto: avisa no grupo quando um perfume chegar ao preço que você quer" aria-label="Alertas por produto"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></button>
+    <button class="btn forte" id="abrir-avaliar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Avaliar<span class="longo">promo</span></button>
+    <div class="config-wrap">
+      <button class="btn sino" id="abrir-config" title="Configurações" aria-label="Configurações" aria-haspopup="true" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></button>
+      <div class="config" id="config" role="dialog" aria-label="Configurações">
+        <h5>Tema</h5>
+        <div class="segmento" data-pref="tema">
+          <button data-v="auto">Auto</button><button data-v="light">Claro</button><button data-v="dark">Escuro</button><button data-v="noite">Noite</button>
+        </div>
+        <h5>Cards</h5>
+        <div class="segmento" data-pref="densidade"><button data-v="normal">Confortável</button><button data-v="compacto">Compacto</button></div>
+        <h5>Avisos e lista</h5>
+        <button class="linha so-celular" id="config-alvos"><span><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>Alertas por produto</span><span aria-hidden="true">›</span></button>
+        <div class="linha">Som quando chegar Excelente <button class="interruptor" data-pref-bool="som" aria-label="Som"></button></div>
+        <div class="linha">Esconder postadas ao abrir <button class="interruptor" data-pref-bool="esconderPostadas" aria-label="Esconder postadas"></button></div>
+        <div class="linha">Abrir em
+          <select data-pref-sel="abrirEm"><option value="melhor">a melhor seção com promos</option><option value="excelentes">Excelentes</option>
+            <option value="boas">Boas</option><option value="medias">Médias</option><option value="ruins">Ruins</option></select></div>
+        <div class="linha">Atualizar a cada
+          <select data-pref-sel="intervalo"><option value="3">3 s</option><option value="10">10 s</option><option value="30">30 s</option></select></div>
+        <div id="conta-bloco" hidden>
+          <h5>Conta</h5>
+          <div class="linha"><span>Entrou como <b id="conta-nome"></b></span><button class="btn" id="sair" style="padding:5px 10px">Sair</button></div>
+          <div class="linha"><span>Código de recuperação<small style="display:block;color:var(--ink-3);font-size:12px">para trocar a senha sozinho se esquecer</small></span>
+            <button class="btn" id="gerar-codigo" style="padding:5px 10px;white-space:nowrap">Gerar</button></div>
+          <div class="linha" id="codigo-conta" hidden style="flex-direction:column;align-items:stretch;font-size:12px;color:var(--ink-2)"></div>
+        </div>
+        <div id="equipe-bloco" hidden>
+          <h5>Equipe (só você vê)</h5>
+          <div class="linha" style="gap:6px"><input id="convite-nome" placeholder="nome da pessoa" style="flex:1;min-width:0;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:6px 8px">
+            <button class="btn" id="convidar" style="padding:5px 10px">Convidar</button></div>
+          <div class="linha" id="convite-link" hidden style="flex-direction:column;align-items:stretch;font-size:12px;color:var(--ink-2)"></div>
+          <div class="fontes" id="equipe-lista"></div>
+        </div>
+        <h5>Chamadas</h5>
+        <div class="linha"><a href="/chamadas" style="color:var(--gold);font-weight:600;text-decoration:none">Aprovar chamadas prontas →</a></div>
+        <h5>Fontes</h5>
+        <div class="fontes" id="fontes">…</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="sugestao" id="sugestao" hidden aria-label="Postar agora"></section>
+  <nav class="secoes" id="secoes">
+    <button class="secao-btn s-excelentes" data-s="excelentes"><div class="topo-s"><span class="rotulo"><i class="bola"></i>Excelentes</span><span class="qtd num" data-q="excelentes">–</span></div><div class="sub">12%+ abaixo do normal ou recorde</div></button>
+    <button class="secao-btn s-boas" data-s="boas"><div class="topo-s"><span class="rotulo"><i class="bola"></i>Boas</span><span class="qtd num" data-q="boas">–</span></div><div class="sub">desconto real, vale postar</div></button>
+    <button class="secao-btn s-medias" data-s="medias"><div class="topo-s"><span class="rotulo"><i class="bola"></i>Médias</span><span class="qtd num" data-q="medias">–</span></div><div class="sub">desconto pequeno</div></button>
+    <button class="secao-btn s-ruins" data-s="ruins"><div class="topo-s"><span class="rotulo"><i class="bola"></i>Ruins</span><span class="qtd num" data-q="ruins">–</span></div><div class="sub">preço normal ou acima</div></button>
+  </nav>
+
+  <div class="cabeca-feed"><h2><span id="titulo-secao">Excelentes</span><small id="desc-secao"></small></h2>
+    <p class="ajuda-sel"><button id="calib" title="👍 = eu postaria · 👎 = não postaria (só os votos contam; copiar não conta)"></button> ·
+      <button id="iniciar-sel">selecionar várias</button><span class="so-mouse"> (ou botão direito no card)</span></p></div>
+  <div class="ferramentas">
+    <label class="busca"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="busca" type="search" placeholder="Buscar perfume, marca ou loja…" aria-label="Buscar perfume, marca ou loja" autocomplete="off"></label>
+    <button class="chip" data-filtro="top">Só TOP vendidos</button>
+    <button class="chip" data-filtro="loja">Só lojas boas</button>
+    <button class="chip" data-filtro="kits">📦 Kits</button>
+    <button class="chip" data-filtro="naopostadas">Esconder postadas</button>
+    <div class="ordem" role="group" aria-label="Ordem das promos">
+      <button class="chip" data-ordem="melhores" title="Não postadas das últimas 6h primeiro, da maior nota para a menor">★ Melhores primeiro</button>
+      <button class="chip" data-ordem="recentes" title="As que apareceram por último primeiro">Mais recentes</button>
+    </div>
+  </div>
+  <section class="feed" id="feed"></section>
+</div>
+
+<div class="fundo" id="fundo"></div>
+<aside class="gaveta" id="gaveta" aria-hidden="true"></aside>
+
+<div class="janela" id="janela" role="dialog" aria-modal="true" aria-labelledby="j-titulo">
+  <h3 id="j-titulo">Avaliar uma promo</h3>
+  <p>Cole a mensagem do jeito que veio no grupo. A curadora lê, confere no Mercado Livre e dá a nota.</p>
+  <textarea id="texto" aria-label="Texto da promo" placeholder="*Lattafa Asad 100ml*&#10;De R$ 289 por R$ 165&#10;https://meli.la/…"></textarea>
+  <div class="erro" id="erro"></div>
+  <div class="j-rodape">
+    <label class="check"><input type="checkbox" id="usar-ml" checked> conferir no Mercado Livre</label>
+    <div style="display:flex;gap:8px"><button class="btn" id="cancelar">Cancelar</button><button class="btn forte" id="avaliar">Avaliar</button></div>
+  </div>
+</div>
+<div class="janela" id="janela-calib" role="dialog" aria-modal="true" aria-labelledby="jc-titulo">
+  <h3 id="jc-titulo">Calibração pelo seu olho</h3>
+  <p>Você marca 👍 (eu postaria) ou 👎 (não postaria) nas promos. A curadora recalcula a nota dessas promos com pesos diferentes e mostra qual combinação mais concorda com você. Nada muda sem você clicar em Aplicar.</p>
+  <div id="calib-corpo" class="ml-box">carregando…</div>
+  <div class="erro" id="calib-erro"></div>
+  <div class="j-rodape"><span></span>
+    <div style="display:flex;gap:8px"><button class="btn" id="calib-fechar">Fechar</button>
+      <button class="btn forte" id="calib-aplicar" hidden>Aplicar ajuste</button></div></div>
+</div>
+<div class="janela" id="janela-alvos" role="dialog" aria-modal="true" aria-labelledby="ja-titulo">
+  <h3 id="ja-titulo">🎯 Alertas por produto</h3>
+  <p>Avisa no grupo quando o perfume sair pelo preço que você escolher ou menos, em qualquer grupo ou no ML, mesmo que a nota não seja Excelente.</p>
+  <div class="alvo-form">
+    <input id="alvo-nome" aria-label="Perfume" placeholder="Perfume, ex.: Lattafa Asad 100ml" autocomplete="off">
+    <input id="alvo-preco" aria-label="Preço máximo, em reais" placeholder="até R$" inputmode="decimal" autocomplete="off">
+    <button class="btn forte" id="alvo-add">Adicionar</button>
+  </div>
+  <div class="dica">Com o volume (100ml), só avisa desse tamanho; sem volume, avisa de qualquer tamanho.</div>
+  <div class="erro" id="alvo-erro"></div>
+  <div id="alvo-lista" class="alvo-lista"></div>
+  <div class="j-rodape"><span></span><button class="btn" id="alvo-fechar">Fechar</button></div>
+</div>
+<div class="barra-sel" id="barra-sel" role="toolbar" aria-label="Promos selecionadas">
+  <b id="sel-qtd">0 selecionadas</b>
+  <button class="btn" id="sel-todas">Selecionar todas</button>
+  <button class="btn" id="sel-copiar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copiar juntas</button>
+  <button class="btn" id="sel-uma">⧉ Copiar uma por uma</button>
+  <button class="btn zap" id="sel-zap">Enviar no WhatsApp</button>
+  <button class="x" id="sel-sair" aria-label="Sair da seleção">×</button>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+// Ícones de linha (traço do Lucide, licença ISC): um desenho para cada função.
+const ICO = (d) => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+const ICONE = {
+  sino: ICO('<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>'),
+  semSino: ICO('<path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"/><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="m2 2 20 20"/>'),
+  copiar: ICO('<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'),
+  joia: ICO('<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>'),
+  naoJoia: ICO('<path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/>'),
+  escudo: ICO('<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>'),
+  cupom: ICO('<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>'),
+};
+const brl = (v) => v == null ? "–" : "R$ " + Number(v).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const brl0 = (v) => v == null ? "–" : "R$ " + Math.round(v).toLocaleString("pt-BR");
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const SECAO_DA_NOTA = {"IMPERDÍVEL": "excelentes", "BOA": "boas", "OK": "medias", "NÃO VALE": "ruins"};
+const NOME_SECAO = {excelentes: "Excelentes", boas: "Boas", medias: "Médias", ruins: "Ruins"};
+const NOME_NOTA = {"IMPERDÍVEL": "Excelente", "BOA": "Boa", "OK": "Média", "NÃO VALE": "Ruim"};
+
+/* ── sessão: se o login venceu, volta para a tela de entrar ── */
+const _fetch = window.fetch.bind(window);
+window.fetch = async (...args) => {
+  const r = await _fetch(...args);
+  if (r.status === 401) location.href = "/entrar";
+  return r;
+};
+
+/* ── preferências do painel (ficam neste navegador) ── */
+const PREFS_PADRAO = {tema: "auto", densidade: "normal", som: false, esconderPostadas: false, abrirEm: "melhor", intervalo: "3",
+                      ordem: "melhores"};
+let prefs = {...PREFS_PADRAO};
+try { prefs = {...PREFS_PADRAO, ...JSON.parse(localStorage.getItem("curadora-config") || "{}")}; } catch (e) {}
+try { if (localStorage.getItem("curadora-avisos") === "1") prefs.som = true; } catch (e) {}  // preferência antiga
+function salvarPrefs() { try { localStorage.setItem("curadora-config", JSON.stringify(prefs)); } catch (e) {} }
+function aplicarTema() {
+  if (prefs.tema === "auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", prefs.tema);
+  document.body.classList.toggle("compacto", prefs.densidade === "compacto");
+}
+aplicarTema();
+
+let secao = "excelentes";
+let itens = new Map();
+let vistos = new Set();
+let primeiraCarga = true;
+let escolhaManual = false;
+
+function quando(ts) {
+  const s = Math.max(0, Date.now() / 1000 - ts);
+  if (s < 60) return "agora";
+  if (s < 3600) return `há ${Math.floor(s / 60)} min`;
+  if (s < 86400) return `há ${Math.floor(s / 3600)} h`;
+  return new Date(ts * 1000).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"});
+}
+function origem(a) {
+  const g = a.grupos && a.grupos.length ? a.grupos : [a.grupo || a.origem];
+  return g.length > 1 ? `em ${g.length} grupos` : (g[0] || "");
+}
+// "apareceu há X" (primeira vez que a oferta foi vista) e, se a vigia/radar reconferiu depois, "conferido há Y".
+function tempos(a) {
+  const inicio = a.primeiro_ts || a.ts;
+  const reconferido = a.ts - inicio > 15 * 60 ? ` · conferido ${quando(a.ts)}` : "";
+  return `${quando(inicio)}${reconferido}`;
+}
+// Na busca (todas as seções), mostra de qual seção é cada promo.
+const buscando = () => $("#busca").value.trim().length > 0;
+const secaoDaBusca = () => (buscando() ? "todas" : secao);
+function pctHTML(p, sufixo = "") {
+  if (p == null) return "";
+  const r = Math.round(p);
+  return `<span class="pct ${p < 3 ? "fraco" : ""}">${r === 0 ? "0%" : (r > 0 ? "−" : "+") + Math.abs(r) + "%"}${sufixo}</span>`;
+}
+// Preço que depende de cupom: quem abre o link vê o preço SEM cupom (o cupom entra no carrinho).
+// Visto em 06/10: "painel R$450, no ML R$500" — o painel precisa dizer isso na hora.
+function cupomHTML(a) {
+  // Cupom do próprio anúncio: o ML mostra "R$ X com Cupom" no card (não é código de grupo; aplica na página).
+  const doAnuncio = (a.ml || {}).preco_cupom;
+  if (!(a.cupons || []).length)
+    return doAnuncio && doAnuncio < a.preco * 0.99
+      ? `<span class="pct" style="background:var(--cupom-soft, var(--med-soft));color:var(--cupom)" title="O Mercado Livre mostra no anúncio: ${brl(doAnuncio)} com cupom (cupom do próprio anúncio, aplicado na página do produto).">${ICONE.cupom}anúncio: ${brl0(doAnuncio)} com cupom</span>` : "";
+  // Cupom quente (teste de 10/10): a equipe confirmou há pouco; o preço do card já é o do ML menos o cupom.
+  if (a.cupom_quente) {
+    const q = a.cupom_quente, sem = (a.ml || {}).preco;
+    return `<span class="pct" style="background:var(--boa-soft);color:var(--boa)" title="Cupom ${esc(q.codigo)} quente: confirmado às ${esc(q.hora)} (${esc(q.por)}). Abrindo o link, o ML mostra ${brl(sem)} sem o cupom.">🔥 com ${esc(q.codigo)} · sem: ${brl0(sem)}</span>`;
+  }
+  // Cupom suspenso (o Breno tirou na edição), esgotado (um grupo ou a equipe avisou), fora da página (indício: sumiu da
+  // página oficial) ou vencido: o preço do card já é sem ele.
+  const mortos = a.cupons_mortos || {};
+  if (a.cupons.every((c) => mortos[c])) {
+    const motivo = a.cupons.map((c) => `${c}: ${mortos[c]}`).join(" · ");
+    const todos = (rotulo) => a.cupons.every((c) => String(mortos[c]).startsWith(rotulo));
+    const estado = todos("velho") ? "velho" : todos("suspenso") ? "suspenso"
+      : todos("indício") ? "fora da página" : "esgotado";   // 03/11: suspenso; 04/11: indício
+    return `<span class="pct" style="background:var(--exc-soft);color:var(--exc)" title="${esc(motivo)}. O preço do card já é o do ML sem cupom.">${ICONE.cupom}cupom ${estado}${a.preco_grupo && a.preco_grupo < a.preco * 0.98 ? ` · grupo dizia ${brl0(a.preco_grupo)}` : ""}</span>`;
+  }
+  // Cupom com regra desconhecida: o preço do card é o do ML; o "com cupom" do grupo fica só como informação.
+  if (a.preco_grupo && a.preco_grupo < a.preco * 0.98)
+    return `<span class="pct" style="background:var(--cupom-soft, var(--med-soft));color:var(--cupom)" title="O grupo anunciou ${brl(a.preco_grupo)} com o cupom ${esc(a.cupons.join(" ou "))}, mas a curadora não conseguiu confirmar a regra do cupom. O preço do card é o que aparece ao abrir o link.">${ICONE.cupom}grupo diz ${brl0(a.preco_grupo)} com cupom?</span>`;
+  const semCupom = (a.ml || {}).preco;
+  if (!semCupom || semCupom <= a.preco * 1.02) return "";
+  return `<span class="pct" style="background:var(--cupom-soft, var(--med-soft));color:var(--cupom)" title="Preço com o cupom ${esc(a.cupons.join(" ou "))}. Abrindo o link, o ML mostra ${brl(semCupom)} (o cupom entra no carrinho).">${ICONE.cupom}com cupom · sem: ${brl0(semCupom)}</span>`;
+}
+// 25/10 (Breno: "não mexe na nota e mostra no card"): por quanto o produto costuma sair nos grupos. O "normal" vem
+// quase todo dos anúncios do ML (Kaiak: normal R$ 115, nos grupos sai por R$ 87). Só aparece se for 3%+ abaixo do
+// normal; preço de agora no costume ou acima fica em cinza, abaixo dele em verde.
+function costumaHTML(a) {
+  const c = a.costuma, n = (a.historico || {}).mediana;
+  if (!c || (n && c > n * 0.97)) return "";
+  const cor = a.preco < c * 0.97 ? "color:var(--boa)" : "";
+  return `<span class="normal" style="${cor}" title="Mediana do menor preço de cada dia nos grupos, em 30 dias. Só informação: a nota não muda.">costuma sair por ${brl0(c)} nos grupos</span>`;
+}
+// Contexto do preço. No card (completo=false) aparece só o mais importante, para não poluir
+// (pedido do Breno em 04/10); na gaveta de detalhe aparece tudo.
+function tendenciaHTML(a, completo = false) {
+  const t = a.tendencia || {};
+  const itensCtx = [];
+  // Só quando o PREÇO mudou de verdade (a nota pode mudar sem o preço mudar: aí não é "subiu/baixou").
+  if (a.era && Math.abs(a.preco - a.era.preco) > a.era.preco * 0.02) itensCtx.push(a.preco > a.era.preco
+    ? `<span class="normal" style="color:var(--exc);font-weight:600" title="Reconferido no ML agora">⚠ subiu: era ${brl0(a.era.preco)}</span>`
+    : `<span class="normal" style="color:var(--boa);font-weight:600" title="Reconferido no ML agora">↘ baixou: era ${brl0(a.era.preco)}</span>`);
+  const k = a.kit_info;
+  if (k) {
+    // Kit: só informação (a nota não muda). Compara o 100ml de perfume do kit com o perfume avulso.
+    const comp = k.avulso_100ml ? ` · avulso ${brl0(k.avulso_100ml)}` : "";
+    const cor = k.avulso_100ml ? (k.preco_100ml < k.avulso_100ml * 0.95 ? "var(--boa)" : k.preco_100ml > k.avulso_100ml * 1.05 ? "var(--exc)" : "") : "";
+    itensCtx.push(`<span class="normal" style="${cor ? `color:${cor}` : ""}" title="Kit com ${k.ml}ml de perfume${k.avulso_100ml ? `; avulso: ${k.avulso_volume}ml por ${brl(k.avulso_preco)} (mediana 60 dias)` : ""}. Só informação: a nota não muda.">📦 ${brl0(k.preco_100ml)} por 100ml${comp}</span>`);
+  }
+  if (a.antes) {
+    // 25/10 (Breno): "melhorou: antes R$ 89" com o preço em R$ 93 confundia. O card novo vem quando a NOTA sobe, e
+    // ela pode subir sem o preço cair (mudou o "normal" do produto). Agora o texto diz o que mudou.
+    const p0 = a.antes.preco;
+    itensCtx.push(a.preco < p0 * 0.98
+      ? `<span class="normal" style="color:var(--boa)" title="Este produto já tinha aparecido e voltou mais barato">↘ mais barato: antes ${brl0(p0)}</span>`
+      : `<span class="normal" title="Este produto já tinha aparecido; voltou porque a nota subiu, sem o preço cair (mudou o preço normal dele)">nota subiu · preço era ${brl0(p0)}</span>`);
+  }
+  if (t.ja_esteve && t.ja_esteve < a.preco * 0.97) itensCtx.push(`<span class="normal" title="Menor preço dos últimos 14 dias: talvez valha esperar">já esteve ${brl0(t.ja_esteve)}</span>`);
+  if (!completo) return itensCtx.slice(0, 1).join("");
+  const c = a.cupom_sugerido;
+  if (c) itensCtx.push(`<span class="normal" style="color:var(--cupom)" title="Cupom visto nos grupos nas últimas 6h em promos de perfume. Pode não valer para este vendedor: conferir no carrinho.">${ICONE.cupom}${esc(c.codigo)} → ${brl0(c.preco_final)}?</span>`);
+  if (t.direcao === "caindo") itensCtx.push(`<span class="normal" style="color:var(--boa)" title="Mediana da semana contra as semanas anteriores">↘ caindo ${Math.abs(Math.round(t.variacao_pct))}% na semana</span>`);
+  if (t.direcao === "subindo") itensCtx.push(`<span class="normal" style="color:var(--exc)" title="Mediana da semana contra as semanas anteriores">↗ subindo ${Math.round(t.variacao_pct)}% na semana</span>`);
+  if (a.vista_de_novo) itensCtx.push(`<span class="normal" title="Vezes em que este produto apareceu de novo, sem melhorar (escondidas)">visto de novo ${a.vista_de_novo}×</span>`);
+  return itensCtx.join(" · ");
+}
+
+// Quem vende, numa linha (09/10, Breno: "acha preços ótimos, mas não sei se são confiáveis").
+function quemVendeHTML(a) {
+  const rep = a.reputacao || {}, ml = a.ml || {};
+  let texto = a.quem_vende;
+  if (!texto) {  // avaliações antigas, de antes do campo existir
+    const p = [];
+    if (temSelo(a)) p.push(`loja oficial ${a.loja || ""}`.trim());
+    else {
+      if (rep.medalha) p.push(rep.medalha.charAt(0).toUpperCase() + rep.medalha.slice(1));
+      if (rep.vendas != null) p.push(`${rep.vendas >= 1000 ? Math.round(rep.vendas / 1000) + " mil" : rep.vendas} vendas`);
+    }
+    if (ml.full) p.push("Full");
+    texto = p.join(" · ");
+  }
+  if (!texto || texto === "vendedor não conferido") return "";
+  const alta = temSelo(a) || rep.medalha === "platinum" || rep.medalha === "gold" || a.vendedor_ok === true;
+  const baixa = !temSelo(a) && (rep.classe === "fraca" || rep.conta_sem_nome || a.vendedor_ok === false || !!a.risco);
+  const cls = baixa ? "baixa" : alta ? "alta" : "";
+  const titulo = baixa ? "Vendedor sem selo e sem reputação comprovada: confira antes de postar"
+    : alta ? "Loja oficial ou vendedor com medalha/reputação comprovada no Mercado Livre" : "Quem vende este anúncio no Mercado Livre";
+  return `<div class="quem ${cls}" title="${titulo}">${baixa ? "⚠ " : ICONE.escudo}${esc(texto)}</div>`;
+}
+
+function temSelo(a) {
+  if (a.loja_selo !== undefined) return !!a.loja_selo;
+  // avaliações antigas (antes do campo existir): deduz pelas razões
+  return (a.razoes || []).some((r) => r.startsWith("loja TOP") && r.includes("confirmado") || r.startsWith("loja oficial confirmada"));
+}
+
+// Selos. No card: no máximo 3, por prioridade (postada > um aviso > TOP > loja com selo > cupom).
+// Na gaveta: todos.
+function tagsHTML(a, completo = false) {
+  const rep = a.reputacao || {};
+  const pe = a.postada_em;
+  const postada = pe
+    ? `<span class="tag grupofinal" title="Este produto foi postado no grupo da equipe nas últimas 6h">📣 postada no ${esc(pe.grupo)} ${quando(pe.ts)}</span>`
+    : a.postada ? `<span class="tag postada">✓ postada ${quando(a.postada)}</span>` : "";
+  const avisos = [];
+  if (a.internacional) avisos.push(`<span class="tag aviso" title="Compra internacional: vendedor de fora do Brasil. O grupo não posta.">🌎 internacional</span>`);
+  if (a.conflito) avisos.push(`<span class="tag aviso" title="${esc(a.conflito)}">⚠ link de outro produto</span>`);
+  if (a.risco) avisos.push(`<span class="tag aviso" title="${esc(a.risco_motivo)}">⚠ risco${a.risco === "alto" ? " alto" : ""}</span>`);
+  if (!a.conflito && (a.alertas || []).some((x) => x.startsWith("preço SUBIU"))) avisos.push(`<span class="tag aviso">⚠ preço subiu</span>`);
+  if (rep.classe === "fraca" || rep.conta_sem_nome) {
+    const motivo = [rep.classe === "fraca" ? "reputação fraca ou poucas vendas" : "", rep.conta_sem_nome ? `conta sem nome de loja (${rep.conta_desde})` : ""].filter(Boolean).join(" · ");
+    avisos.push(`<span class="tag aviso" title="${esc(motivo)}">⚠ vendedor fraco</span>`);
+  }
+  if (a.produtos_vendedor === 1 && !a.loja_selo) avisos.push(`<span class="tag aviso" title="A curadora só viu este vendedor vendendo este perfume (como uma loja com 1 produto só). Pode ser revendedor pequeno de verdade; confira antes de postar.">⚠ loja de 1 produto</span>`);
+  if (a.de_inflado) avisos.push(`<span class="tag aviso" title="O preço 'de' anunciado nunca foi real nos últimos 90 dias">“de” inflado</span>`);
+  const selo = temSelo(a);
+  const top = a.top_vendido ? `<span class="tag top">TOP vendido</span>` : "";
+  const loja = a.loja && (selo || completo)
+    ? `<span class="tag ${selo ? "loja-ok" : ""}" title="${selo ? "Loja oficial ou TOP confirmada no Mercado Livre" : "Loja sem selo de oficial"}">${selo ? "✓ " : ""}${esc(a.loja)}</span>` : "";
+  const medalha = rep.medalha === "platinum" || rep.medalha === "gold"
+    ? `<span class="tag top" title="Medalha de vendedor no Mercado Livre${rep.vendas ? ` · ${rep.vendas} vendas` : ""}">★ ${rep.medalha === "platinum" ? "Platinum" : "Gold"}</span>` : "";
+  const mortos = a.cupons_mortos || {};
+  const cupons = (a.cupons || []).slice(0, completo ? 2 : 1).map((c) => mortos[c]
+    ? `<span class="tag cupom morto" title="${esc(mortos[c])}">${esc(c)}</span>` : `<span class="tag cupom">${esc(c)}</span>`);
+  const velha = a.sem_conferir_h ? `<span class="tag aviso" title="O ML não deixou reconferir este link: o preço pode ter mudado. Abra antes de postar.">⏳ preço de ${a.sem_conferir_h}h atrás</span>` : "";
+  const trava = a.trava ? `<span class="tag trava" title="O pipeline não manda esta agora: ${esc(a.trava)}">🔒 ${esc(a.trava)}</span>` : "";
+  const alvoTag = a.alvo ? `<span class="tag alvo" title="Alguém da equipe pediu aviso para este perfume por até ${brl0(a.alvo)}">🎯 no alvo (até ${brl0(a.alvo)})</span>` : "";
+  if (completo) {
+    const pouco = (a.historico || {}).observacoes < 3 ? `<span class="tag">pouco histórico</span>` : "";
+    return [trava, postada, velha, alvoTag, ...avisos, top, quemVendeHTML(a) ? "" : loja, medalha, ...cupons, pouco].filter(Boolean).join("");
+  }
+  // A loja já aparece na linha "quem vende" do card: não repete como selo.
+  const lojaNoSelo = quemVendeHTML(a) ? "" : (loja || medalha);
+  return [trava || postada, velha, alvoTag, avisos[0] || "", top, lojaNoSelo, ...cupons].filter(Boolean).slice(0, 3).join("");
+}
+const corSecao = (a) => "s-" + (SECAO_DA_NOTA[a.nota] || "ruins");
+// Postada nas últimas 6h (no grupo da equipe ou copiada aqui): fica apagada e vai para baixo.
+const postadaRecente = (a) => !!a.postada_em || (a.postada && Date.now() / 1000 - a.postada <= 6 * 3600);
+let grupoEquipe = "";
+
+/* ── sugestão do que postar agora (a equipe posta a cada ~7 min) ── */
+let assinaturaSug = "";
+function desenharSugestao(s) {
+  const el = $("#sugestao");
+  if (!s) { el.hidden = true; return; }
+  grupoEquipe = s.grupo_equipe || "";
+  const agora = Date.now() / 1000;
+  const assinatura = (s.itens || []).map((a) => `${a.id}:${a.score}:${a.preco}`).join(",") + "|" +
+    ((s.ultimo_post || {}).ts || "") + "|" + Math.floor(agora / 30);
+  if (assinatura === assinaturaSug) return;  // não redesenha à toa (não apaga o "✓ Copiada")
+  assinaturaSug = assinatura;
+  el.hidden = false;
+  const u = s.ultimo_post;
+  const nomeGrupo = esc(grupoEquipe || "grupo da equipe");
+  let linha = `<span>📣 Ainda não vi post no ${nomeGrupo}</span>`;
+  if (u) {
+    const passou = agora - u.ts;
+    const ritmo = passou >= s.ritmo_s ? `<b class="hora">⏱ já dá pra postar</b>`
+      : `<span>⏱ próximo em ~${Math.max(1, Math.ceil((s.ritmo_s - passou) / 60))} min</span>`;
+    linha = `<span>📣 Último post no ${nomeGrupo}: <b>${quando(u.ts)}</b> · ${esc((u.produto || "").slice(0, 42))}</span>${ritmo}`;
+  }
+  const [a, ...outras] = s.itens || [];
+  if (!a) { el.innerHTML = `<div class="sug-linha">${linha}</div><div class="sug-vazia">Nada visto nas últimas 6h e ainda não postado.</div>`; return; }
+  [a, ...outras].forEach((o) => itens.set(o.id, o));
+  el.innerHTML = `<div class="sug-linha">${linha}</div>
+    <div class="sug-principal ${corSecao(a)}" data-id="${a.id}">
+      ${fotoHTML(a)}
+      <div class="sug-info"><small title="A melhor promo das últimas 6h que ainda não foi postada">Postar agora</small>
+        <div class="produto" title="${esc(a.produto)}">${esc(a.produto)}</div>
+        <div class="quando"><b style="color:var(--c)">${NOME_NOTA[a.nota] || a.nota}</b> · ${tempos(a)} · ${esc(origem(a))}</div></div>
+      <div class="sug-preco"><span class="preco num">${brl(a.preco)}</span>${pctHTML(a.pct_abaixo)}${cupomHTML(a)}</div>
+      <div class="score num">${a.score}</div>
+      <div class="sug-acoes"><button class="btn forte copiar" data-acao="copiar">${ICONE.copiar}Copiar promo</button>
+        ${a.link ? `<a class="btn" href="${esc(a.link)}" target="_blank" rel="noopener" data-acao="abrir">Abrir ↗</a>` : ""}
+        <span class="espaco" style="flex:1"></span>
+        <button class="btn" data-acao="ja-postada" title="Já foi postada (marca como postada e passa para a próxima)">✓ Já foi postada</button>
+        <button class="btn" data-acao="pular" title="Tira da sugestão por 2h (continua na lista)">Pular</button></div>
+    </div>` + (outras.length ? `<div class="sug-outras">Próximas:
+      ${outras.map((o) => `<button class="sug-outra" data-id="${o.id}" title="${esc(o.produto)}">${esc(o.produto.slice(0, 36))} · <b>${o.score}</b></button>`).join("")}</div>` : "");
+}
+$("#sugestao").addEventListener("click", async (e) => {
+  const caixa = e.target.closest("[data-id]"); if (!caixa) return;
+  const a = itens.get(Number(caixa.dataset.id)); if (!a) return;
+  const alvo = e.target.closest("[data-acao]");
+  if (alvo && alvo.dataset.acao === "abrir") return;
+  if (alvo && alvo.dataset.acao === "copiar") { e.stopPropagation(); assinaturaSug = ""; copiar(a, alvo); return; }
+  if (alvo && alvo.dataset.acao === "ja-postada") {
+    e.stopPropagation(); assinaturaSug = ""; await marcarPostadas([a]); avisar("Marcada como postada"); atualizarTudo(); return;
+  }
+  if (alvo && alvo.dataset.acao === "pular") {
+    e.stopPropagation(); assinaturaSug = "";
+    await fetch("/api/pular", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({chave: a.chave})});
+    avisar("Pulada por 2h"); atualizarTudo(); return;
+  }
+  abrirDetalhe(a);
+});
+
+function fotoHTML(a, tamanho = "") {
+  const foto = a.foto || (a.ml && a.ml.foto);
+  const inicial = esc((a.produto || "?").replace(/^(perfume|kit|árabe|arabe)\s+/i, "").trim().charAt(0).toUpperCase());
+  // A inicial fica por baixo; se a foto não carregar, ela some e a inicial aparece.
+  return `<div class="foto ${foto ? "" : "vazia"}" ${tamanho}><span class="inicial">${inicial}</span>${foto
+    ? `<img src="${esc(foto)}" alt="" decoding="async" onerror="this.parentNode.classList.add('vazia');this.remove()">` : ""}
+    <i class="marca-sel">✓</i></div>`;
+}
+
+function cardHTML(a) {
+  const h = a.historico || {};
+  return `
+    <div class="card-topo">
+      ${fotoHTML(a)}
+      <div style="min-width:0"><button class="produto" title="${esc(a.produto)}">${esc(a.produto)}</button>
+        <div class="quando">${buscando() ? `<b style="color:var(--c)">${NOME_NOTA[a.nota] || a.nota}</b> · ` : ""}${tempos(a)} · ${esc(origem(a))}</div></div>
+      <div class="score num">${a.score}</div>
+    </div>
+    <div class="precos"><span class="preco num">${brl(a.preco)}</span>${pctHTML(a.pct_abaixo)}${cupomHTML(a)}
+      ${h.mediana ? `<span class="normal">normal ${brl0(h.mediana)}</span>` : ""}${costumaHTML(a)}${tendenciaHTML(a)}</div>
+    ${quemVendeHTML(a)}
+    <div class="tags">${tagsHTML(a)}</div>
+    <div class="card-acoes">
+      <button class="btn copiar" data-acao="copiar">${ICONE.copiar}Copiar promo</button>
+      ${a.link ? `<a class="btn" href="${esc(a.link)}" target="_blank" rel="noopener" data-acao="abrir">Abrir ↗</a>` : ""}
+      <span class="espaco"></span>
+      <button class="voto ${a.voto === 1 ? "sim" : ""}" data-acao="voto" data-v="1" title="Eu postaria" aria-label="Eu postaria">${ICONE.joia}</button>
+      <button class="voto nao ${a.voto === -1 ? "sim" : ""}" data-acao="voto" data-v="-1" title="Não postaria" aria-label="Não postaria">${ICONE.naoJoia}</button>
+    </div>`;
+}
+
+function render(lista) {
+  const feed = $("#feed");
+  feed.innerHTML = "";
+  if (!lista.length) {
+    const filtrando = filtros.size || $("#busca").value.trim();
+    feed.innerHTML = filtrando
+      ? `<div class="vazio"><b>Nenhuma promo com esses filtros.</b>Tente outra busca ou desligue um filtro.</div>`
+      : `<div class="vazio"><b>Nada em ${NOME_SECAO[secao]} por enquanto.</b>Quando aparecer, a promo surge aqui no topo.</div>`;
+  }
+  let divisor = false;
+  for (const a of lista) {
+    if (a.trava && !divisor && !buscando()) {
+      // 21/10: as travadas vêm no fim da seção, separadas
+      divisor = true;
+      const d = document.createElement("div");
+      d.className = "divisor-travadas";
+      d.innerHTML = "🔒 <b>Travadas</b> · o pipeline não manda agora (o motivo está em cada card)";
+      feed.appendChild(d);
+    }
+    itens.set(a.id, a);
+    const el = document.createElement("article");
+    el.className = `card ${corSecao(a)}` + (!primeiraCarga && !vistos.has(a.id) ? " novo" : "") +
+      (selecionadas.has(a.id) ? " sel" : "") + (postadaRecente(a) || a.sem_conferir_h || a.trava ? " foi-postada" : "");
+    el.dataset.id = a.id;
+    el.innerHTML = cardHTML(a);
+    feed.appendChild(el);
+    vistos.add(a.id);
+  }
+  primeiraCarga = false;
+}
+
+/* ── busca e filtros (no navegador, sobre a seção aberta) ── */
+const filtros = new Set();
+const normalizar = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function filtrar(lista) {
+  const termos = normalizar($("#busca").value).split(/\s+/).filter(Boolean);
+  return lista.filter((a) => {
+    if (filtros.has("top") && !a.top_vendido) return false;
+    if (filtros.has("loja") && !temSelo(a) && !/lipx|wathiq/i.test(a.loja || "")) return false;
+    if (filtros.has("naopostadas") && a.postada) return false;
+    if (filtros.has("kits") && !String(a.chave || "").startsWith("kit:")) return false;
+    const alvo = normalizar(`${a.produto} ${a.loja} ${(a.grupos || []).join(" ")} ${a.texto || ""} ${(a.ml || {}).titulo || ""}`);
+    return termos.every((t) => alvo.includes(t));
+  });
+}
+
+let assinaturaFeed = "";
+let ultimaLista = [];
+// O que a lista na tela deve mostrar: seção (ou busca) e ordem. Resposta pedida para outra chave chegou atrasada
+// e é ignorada (20/10, Breno: "cliquei nas boas, voltou ao excelente e depois voltou na boa": a atualização de 3 s
+// que já estava a caminho com as Excelentes chegava depois do clique e desenhava por cima).
+const chaveFeed = () => `${secaoDaBusca()}|${$("#busca").value.trim()}|${prefs.ordem}`;
+const listaDaChave = new Map();  // última lista de cada seção: voltar a uma aba mostra na hora e atualiza em seguida
+// Depois da primeira carga, busca as outras seções uma vez, uma de cada vez: o primeiro toque em cada aba já mostra a
+// lista na hora e o pedido do toque atualiza em seguida (a VPS fica a ~250 ms; numa conexão nova, quase 1 s).
+let preBuscou = false;
+async function preBuscarSecoes() {
+  if (preBuscou) return;
+  preBuscou = true;
+  for (const s of Object.keys(NOME_SECAO)) {
+    const chave = `${s}||${prefs.ordem}`;
+    if (listaDaChave.has(chave)) continue;
+    try {
+      const lista = await (await fetch(`/api/feed?secao=${s}&limite=120&ordem=${prefs.ordem}`)).json();
+      if (!listaDaChave.has(chave)) listaDaChave.set(chave, lista);
+    } catch (e) { return; }
+  }
+}
+async function carregarFeed(pronta, chave = chaveFeed()) {
+  try {
+    const lista = pronta || await (await fetch(`/api/feed?secao=${secaoDaBusca()}&limite=${buscando() ? 400 : 120}&ordem=${prefs.ordem}`)).json();
+    if (chave !== chaveFeed()) return;
+    if (!buscando()) listaDaChave.set(chave, lista);
+    ultimaLista = lista;
+    // Só redesenha quando algo mudou: não interrompe o "Copiada" nem um clique em andamento.
+    const visiveis = filtrar(lista);
+    const assinatura = secao + "|" + [...filtros].join() + "|" + $("#busca").value + "|" +
+      visiveis.map((a) => `${a.id}:${a.voto}:${a.postada}:${(a.postada_em || {}).ts}:${(a.grupos || []).length}:${a.preco}:${a.ts}:${a.trava || ""}`).join(",");
+    if (assinatura === assinaturaFeed) return;
+    assinaturaFeed = assinatura;
+    render(visiveis);
+  } catch (e) {}
+}
+function refiltrar() { assinaturaFeed = ""; const v = filtrar(ultimaLista); render(v); }
+
+/* ── marcar como postada ── */
+async function marcarPostadas(lista) {
+  const ids = lista.flatMap((a) => a.ids || [a.id]);
+  if (!ids.length) return;
+  await fetch("/api/postada", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({ids, postada: true})});
+  const agora = Math.floor(Date.now() / 1000);
+  lista.forEach((a) => a.postada = agora);
+  assinaturaFeed = "";
+  carregarFeed();
+}
+
+let contagemAnterior = null;
+async function carregarSecoes(pronta) {
+  try {
+    const c = pronta || await (await fetch("/api/secoes")).json();
+    for (const [s, n] of Object.entries(c)) document.querySelector(`[data-q="${s}"]`).textContent = n;
+    if (contagemAnterior && c.excelentes > contagemAnterior.excelentes) { avisar("🔥 Chegou promo excelente!"); avisarExcelente(); }
+    if (!escolhaManual && !contagemAnterior && prefs.abrirEm === "melhor") {
+      const primeira = ["excelentes", "boas", "medias", "ruins"].find((s) => c[s] > 0);
+      if (primeira && primeira !== secao) escolherSecao(primeira, false);
+    }
+    contagemAnterior = c;
+  } catch (e) {}
+}
+
+async function carregarStatus(pronto) {
+  try {
+    const s = pronto || await (await fetch("/api/status")).json();
+    const vivo = s.modo === "ao vivo" || s.modo === "simulação";
+    $("#ponto").className = "ponto" + (vivo ? " vivo" : "");
+    $("#modo").innerHTML = s.modo === "simulação" ? `simulação <span class="longo">· ${s.sim_feitas}/${s.sim_total} mensagens</span>` :
+      s.modo === "ao vivo" ? "ao vivo" : s.modo === "parado" ? "revendo dados" : esc(s.modo);
+    $(".estado").title = $("#modo").textContent;
+    $("#fontes").innerHTML = (s.fontes || []).map((f) =>
+      `<div class="fonte"><i class="${f.ok ? "ok" : ""}"></i><div>${esc(f.nome)}<small>${esc(f.detalhe)}</small></div></div>`).join("");
+    const n = (s.votos_bons || 0) + (s.votos_ruins || 0);
+    $("#calib").textContent = n >= 20 ? `${n} votos seus: já dá para calibrar a nota` : `${n}/20 votos para calibrar a nota`;
+  } catch (e) {}
+}
+
+function escolherSecao(s, manual = true) {
+  secao = s; escolhaManual = escolhaManual || manual; primeiraCarga = true; assinaturaFeed = "";
+  if (manual && buscando()) $("#busca").value = "";  // clicar numa seção sai da busca
+  document.querySelectorAll(".secao-btn").forEach((b) => {
+    b.classList.toggle("ativa", b.dataset.s === s); b.setAttribute("aria-pressed", String(b.dataset.s === s));
+  });
+  $("#titulo-secao").textContent = NOME_SECAO[s];
+  $("#desc-secao").textContent = document.querySelector(`.secao-btn[data-s="${s}"] .sub`).textContent;
+  $("#desc-secao").hidden = buscando();
+  const guardada = listaDaChave.get(chaveFeed());
+  // Sem lista guardada dessa seção: mostra "Carregando", nunca os cards da seção anterior.
+  if (guardada) carregarFeed(guardada); else $("#feed").innerHTML = `<div class="vazio"><b>Carregando ${NOME_SECAO[s]}…</b></div>`;
+  carregarFeed();
+}
+
+function avisar(texto, ms = 3500) {
+  const t = $("#toast");
+  t.textContent = texto; t.classList.add("ver");
+  clearTimeout(avisar._t); avisar._t = setTimeout(() => t.classList.remove("ver"), ms);
+}
+
+/* ── copiar ── */
+function textoDaPromo(a) {
+  if (a.texto && a.texto.trim()) return a.texto.trim();
+  const linhas = [a.produto, a.preco_de ? `De ${brl(a.preco_de)} por ${brl(a.preco)}` : `Por ${brl(a.preco)}`];
+  if (a.cupons && a.cupons.length) linhas.push(`Cupom: ${a.cupons.join(" ou ")}`);
+  if (a.link) linhas.push(a.link);
+  return linhas.join("\n");
+}
+async function copiar(a, botao) {
+  const texto = textoDaPromo(a);
+  try { await navigator.clipboard.writeText(texto); }
+  catch (e) {  // navegador sem permissão: plano B
+    const t = document.createElement("textarea"); t.value = texto; document.body.appendChild(t); t.select();
+    document.execCommand("copy"); t.remove();
+  }
+  if (botao) {
+    const antes = botao.innerHTML; botao.classList.add("copiado"); botao.innerHTML = "✓ Copiada";
+    setTimeout(() => { botao.classList.remove("copiado"); botao.innerHTML = antes; }, 1600);
+  }
+  avisar("Promo copiada e marcada como postada");
+  marcarPostadas([a]);
+  conferirAgora(a);
+}
+// 09/10: confere no ML na hora de postar (o preço muda em 8% das Boas/Excelentes na primeira hora).
+async function conferirAgora(a) {
+  try {
+    const r = await (await fetch("/api/conferir", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({id: a.id, preco: a.preco})})).json();
+    if (!r.ok) return;
+    const mortos = Object.keys(r.cupons_mortos || {});
+    // 03/11: o motivo começa pelo estado ("suspenso: você tirou...", "esgotado: o grupo X avisou...", "vencido");
+    // 04/11: "indício: saiu da página..." aparece como "fora da página"
+    const estado = c => {
+      const e = String(r.cupons_mortos[c] || "").split(/[ :]/)[0] || "esgotado";
+      return e === "indício" ? "fora da página" : e;
+    };
+    if (r.mudou) avisar(`⚠ Conferi no ML agora: o preço mudou de ${brl(r.preco_antes)} para ${brl(r.preco)}`, 7000);
+    else if (mortos.length) avisar(`⚠ Cupom ${mortos.map(c => `${c} ${estado(c)}`).join(", ")}: sem ele sai ${brl(r.preco)}`, 7000);
+    else avisar(`✓ Conferido no ML agora: ${brl(r.preco)}`);
+    assinaturaFeed = ""; assinaturaSug = ""; atualizarTudo();
+  } catch (e) { /* sem rede: fica o aviso da cópia */ }
+}
+
+async function votar(a, voto, raiz) {
+  const novo = a.voto === voto ? 0 : voto;
+  await fetch("/api/voto", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id: a.id, voto: novo})});
+  a.voto = novo;
+  assinaturaFeed = "";  // o voto entra na próxima atualização
+  document.querySelectorAll(`[data-id="${a.id}"] .voto, .gaveta .voto`).forEach((b) => b.classList.toggle("sim", Number(b.dataset.v) === novo));
+}
+
+/* ── detalhe ── */
+function abrirDetalhe(a) {
+  const h = a.historico || {};
+  const nomes = {preco: "preço", relevancia: "relevância", loja: "loja", sinais_ml: "sinais ML", desconto: "desconto", conflito: "conflito"};
+  const maximos = {preco: 60, relevancia: 18, loja: 15, sinais_ml: 5, desconto: 2, conflito: 40};
+  const tipoRef = {com_cupom: "preços com cupom", sem_cupom: "preços sem cupom", todos: "todos os preços"}[h.tipo] || "";
+  const g = $("#gaveta");
+  g.className = "gaveta " + corSecao(a);
+  g.innerHTML = `
+    <div class="g-topo">
+      <div class="g-linha">
+        ${fotoHTML(a, 'style="width:88px;height:88px"')}
+        <div><h3>${esc(a.produto)}</h3><div class="score num" style="display:inline-grid;width:auto;height:auto;padding:3px 9px;margin:6px 0 2px;font-size:13px">${a.score}/100</div><div class="quando">${NOME_NOTA[a.nota] || a.nota} · ${quando(a.ts)} · ${esc(origem(a))} · confiança ${esc(a.confianca)}</div></div>
+        <button class="fechar" id="fechar" aria-label="Fechar">×</button>
+      </div>
+      <div class="precos" style="margin-top:12px"><span class="preco num">${brl(a.preco)}</span>${pctHTML(a.pct_abaixo, " vs normal")}
+        ${h.mediana ? `<span class="normal">normal ${brl0(h.mediana)}</span>` : ""}${costumaHTML(a)}</div>
+      <div class="precos" style="margin-top:6px">${tendenciaHTML(a, true)}</div>
+      <div style="margin-top:8px">${quemVendeHTML(a)}</div>
+      <div class="tags" style="margin-top:10px">${tagsHTML(a, true)}</div>
+      <div class="g-acoes">
+        <button class="btn forte" id="g-copiar">${ICONE.copiar}Copiar promo</button>
+        ${a.link ? `<a class="btn" href="${esc(a.link)}" target="_blank" rel="noopener">Abrir no ML ↗</a>` : ""}
+        <span class="espaco"></span>
+        <button class="voto ${a.voto === 1 ? "sim" : ""}" data-v="1" title="Eu postaria" aria-label="Eu postaria">${ICONE.joia}</button>
+        <button class="voto nao ${a.voto === -1 ? "sim" : ""}" data-v="-1" title="Não postaria" aria-label="Não postaria">${ICONE.naoJoia}</button>
+      </div>
+    </div>
+    <div class="parte"><h4>A promo</h4><pre class="original">${esc(textoDaPromo(a))}</pre>
+      ${a.grupos && a.grupos.length > 1 ? `<div class="dica">Vista em: ${esc(a.grupos.join(", "))}</div>` : ""}</div>
+    <div class="parte"><h4>Preço nos últimos 60 dias</h4>
+      <div class="grafico" id="grafico"><div class="dica">carregando…</div></div>
+      <div class="legenda"><span><i style="background:var(--sem)"></i>sem cupom</span><span><i style="background:var(--cupom)"></i>com cupom</span>
+        <span><i style="background:var(--ml)"></i>ML (mediana do dia)</span><span><i style="background:var(--exc)"></i>esta promo</span></div>
+      ${h.mediana ? `<div class="dica">Normal: mediana ${brl0(h.mediana)} · mínimo ${brl0(h.minimo)} · ${h.observacoes} preços em ${h.dias} dias (${tipoRef})</div>` : ""}
+    </div>
+    <div class="parte" id="parte-melhores" hidden><h4>Menores preços nos últimos 60 dias</h4><ul class="melhores" id="melhores"></ul></div>
+    <div class="parte"><h4>Por que essa nota</h4>
+      ${Object.entries(a.componentes || {}).map(([k, v]) => `<div class="comp"><span>${nomes[k] || k}</span>
+        <div class="trilho"><i class="${v < 0 ? "neg" : ""}" style="width:${Math.min(100, Math.abs(v) / (maximos[k] || 60) * 100)}%"></i></div>
+        <b class="num">${v > 0 ? "+" : ""}${v}</b></div>`).join("")}
+      <ul class="razoes" style="margin-top:12px">${(a.razoes || []).map((r) => `<li>${esc(r)}</li>`).join("")}</ul>
+      ${(a.alertas || []).length ? `<ul class="razoes ruins" style="margin-top:10px">${a.alertas.map((r) => `<li>${esc(r)}</li>`).join("")}</ul>` : ""}
+    </div>
+    ${a.ml ? `<div class="parte"><h4>Conferido no Mercado Livre</h4><div class="ml-box"><b>${esc(a.ml.titulo)}</b><br>
+      ${brl(a.ml.preco)} · ${a.ml.vendedor ? esc(a.ml.vendedor) + (a.ml.oficial ? " ✓ loja oficial" : "") : "vendedor não exibido"}
+      ${a.ml.full ? " · FULL" : ""}${a.ml.mais_vendido ? " · MAIS VENDIDO" : ""}</div></div>` : ""}`;
+  g.classList.add("aberta"); g.setAttribute("aria-hidden", "false");
+  $("#fundo").classList.add("aberto");
+  $("#fechar").onclick = fecharTudo;
+  lembrarFoco(); $("#fechar").focus();
+  $("#g-copiar").onclick = (e) => copiar(a, e.currentTarget);
+  g.querySelectorAll(".voto").forEach((b) => b.onclick = () => votar(a, Number(b.dataset.v)));
+  desenharGrafico(a);
+}
+let focoAntes = null;  // ao fechar a gaveta ou uma janela, o foco volta para onde estava
+function lembrarFoco() { if (!focoAntes) focoAntes = document.activeElement; }
+function fecharTudo() {
+  $("#gaveta").classList.remove("aberta"); $("#gaveta").setAttribute("aria-hidden", "true");
+  $("#janela").classList.remove("aberta"); $("#janela-calib").classList.remove("aberta"); $("#janela-alvos").classList.remove("aberta"); $("#fundo").classList.remove("aberto");
+  if (focoAntes && document.contains(focoAntes)) focoAntes.focus();
+  focoAntes = null;
+}
+
+async function desenharGrafico(a) {
+  const pts = (await (await fetch(`/api/historico?chave=${encodeURIComponent(a.chave)}&dias=60`)).json()).pontos;
+  const alvo = $("#grafico");
+  if (!alvo) return;
+  if (!pts.length) { alvo.innerHTML = `<div class="dica">Sem histórico para este produto ainda.</div>`; return; }
+  const W = 530, H = 210, E = 46, D = 12, T = 12, B = 26, agora = Date.now() / 1000;
+  const x0 = Math.min(...pts.map((p) => p.ts), agora - 86400), x1 = agora;
+  // 18/10 (Breno: "isso está ilegível"): o radar anota cada anúncio do ML todo dia (~150/dia no Club de Nuit
+  // Intense) e os pontos viravam uma mancha, com os anúncios caros esticando o eixo. O ML vira um ponto por dia
+  // (mediana dos anúncios) com a faixa do 1º ao 3º quartil; o eixo segue os grupos, essas faixas e esta promo.
+  const quartil = (xs, f) => xs[Math.round((xs.length - 1) * f)];
+  const porDia = new Map(), grupos = [];
+  for (const p of pts) {
+    if (p.tipo !== "ml") { grupos.push(p); continue; }
+    const dia = Math.floor(p.ts / 86400);
+    if (!porDia.has(dia)) porDia.set(dia, []);
+    porDia.get(dia).push(p.preco);
+  }
+  const mlDia = [...porDia].map(([dia, ps]) => {
+    ps.sort((m, n) => m - n);
+    return {ts: Math.min(dia * 86400 + 43200, agora), med: quartil(ps, 0.5), p25: quartil(ps, 0.25), p75: quartil(ps, 0.75),
+            menor: ps[0], n: ps.length};
+  });
+  const ordem = (xs) => [...xs].sort((m, n) => m - n);
+  const ordG = ordem(grupos.map((p) => p.preco)), p25s = ordem(mlDia.map((m) => m.p25)), p75s = ordem(mlDia.map((m) => m.p75));
+  const baixos = [a.preco], altos = [a.preco];
+  if (ordG.length) { baixos.push(ordG[Math.floor(ordG.length * 0.02)]); altos.push(ordG[Math.ceil(ordG.length * 0.98) - 1]); }
+  if (mlDia.length) { baixos.push(quartil(p25s, 0.1)); altos.push(quartil(p75s, 0.9)); }
+  if (a.historico && a.historico.mediana) { baixos.push(a.historico.mediana); altos.push(a.historico.mediana); }
+  const lo = Math.min(...baixos) * 0.93, hi = Math.max(...altos) * 1.05;
+  const X = (t) => E + (t - x0) / (x1 - x0) * (W - E - D);
+  const Y = (v) => T + (1 - (Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * (H - T - B);
+  const cor = {com_cupom: "var(--cupom)", sem_cupom: "var(--sem)", ml: "var(--ml)"};
+  const rotulo = `paint-order="stroke" stroke="var(--surface)" stroke-width="4" stroke-linejoin="round"`;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Histórico de preço">`;
+  for (let i = 0; i <= 3; i++) {
+    const v = lo + (hi - lo) * i / 3, y = Y(v);
+    svg += `<line x1="${E}" x2="${W - D}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${E - 6}" y="${y + 4}" text-anchor="end" font-size="10" fill="var(--ink-3)">${Math.round(v)}</text>`;
+  }
+  for (let d = 0; d <= 60; d += 15) {
+    const t = x1 - d * 86400; if (t < x0) continue;
+    svg += `<text x="${X(t)}" y="${H - 8}" text-anchor="middle" font-size="10" fill="var(--ink-3)">${d === 0 ? "hoje" : d + "d"}</text>`;
+  }
+  const med = a.historico && a.historico.mediana;
+  if (med) svg += `<line x1="${E}" x2="${W - D}" y1="${Y(med)}" y2="${Y(med)}" stroke="var(--ink-3)" stroke-dasharray="4 4"/>`;
+  const diaCurto = (ts) => new Date(ts * 1000).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"});
+  for (const m of mlDia) {
+    const x = X(m.ts).toFixed(1);
+    svg += `<line x1="${x}" x2="${x}" y1="${Y(m.p75).toFixed(1)}" y2="${Y(m.p25).toFixed(1)}" stroke="var(--ml)" stroke-width="4" stroke-linecap="round" opacity=".25"/>`;
+    svg += `<circle cx="${x}" cy="${Y(m.med).toFixed(1)}" r="2.8" fill="var(--ml)"><title>ML ${diaCurto(m.ts)}: mediana ${brl(m.med)} · ${m.n} anúncio${m.n > 1 ? "s" : ""} · menor ${brl(m.menor)}</title></circle>`;
+  }
+  for (const p of grupos) svg += `<circle cx="${X(p.ts).toFixed(1)}" cy="${Y(p.preco).toFixed(1)}" r="2.6" fill="${cor[p.tipo]}" opacity=".7"><title>${brl(p.preco)} · ${esc(p.fonte)}</title></circle>`;
+  svg += `<line x1="${E}" x2="${W - D}" y1="${Y(a.preco)}" y2="${Y(a.preco)}" stroke="var(--exc)" stroke-width="1.5"/>`;
+  const acima = !med || a.preco >= med;
+  if (med) svg += `<text x="${W - D}" y="${Y(med) + (acima ? 13 : -5)}" text-anchor="end" font-size="10" fill="var(--ink-2)" ${rotulo}>normal ${brl0(med)}</text>`;
+  svg += `<text x="${E + 4}" y="${Y(a.preco) + (acima ? -5 : 13)}" font-size="10.5" font-weight="600" fill="var(--exc)" ${rotulo}>esta promo ${brl0(a.preco)}</text></svg>`;
+  alvo.innerHTML = svg;
+
+  // Os 5 menores preços (um por dia e fonte), para saber se esta promo é mesmo das melhores.
+  const vistosM = new Set(), melhores = [];
+  for (const p of [...pts].sort((m, n) => m.preco - n.preco)) {
+    const k = `${new Date(p.ts * 1000).toDateString()}|${p.fonte}`;
+    if (vistosM.has(k)) continue;
+    vistosM.add(k); melhores.push(p);
+    if (melhores.length === 5) break;
+  }
+  const tipoNome = {com_cupom: "com cupom", sem_cupom: "sem cupom", ml: "visto no ML"};
+  if (melhores.length && $("#melhores")) {
+    $("#melhores").innerHTML = melhores.map((p) => `<li><b class="num">${brl(p.preco)}</b>
+      <span>${esc(p.fonte || "")} · ${tipoNome[p.tipo] || ""}</span>
+      <span>${new Date(p.ts * 1000).toLocaleDateString("pt-BR", {day: "2-digit", month: "2-digit"})}</span></li>`).join("");
+    $("#parte-melhores").hidden = false;
+  }
+}
+
+/* ── seleção de várias promos (como no WhatsApp) ── */
+const selecionadas = new Map();
+let filaUma = 0;
+function modoSelecao(ligar) {
+  document.body.classList.toggle("selecionando", ligar);
+  if (!ligar) { selecionadas.clear(); document.querySelectorAll(".card.sel").forEach((c) => c.classList.remove("sel")); }
+  atualizarBarra();
+}
+function alternar(a, card) {
+  if (selecionadas.has(a.id)) selecionadas.delete(a.id); else selecionadas.set(a.id, a);
+  card.classList.toggle("sel", selecionadas.has(a.id));
+  filaUma = 0;
+  atualizarBarra();
+}
+function atualizarBarra() {
+  const n = selecionadas.size, ativo = document.body.classList.contains("selecionando");
+  $("#barra-sel").classList.toggle("ver", ativo);
+  $("#sel-qtd").textContent = n === 0 ? "Toque nas promos" : n === 1 ? "1 selecionada" : `${n} selecionadas`;
+  ["#sel-copiar", "#sel-uma", "#sel-zap"].forEach((s) => $(s).disabled = n === 0);
+  $("#sel-uma").innerHTML = ICONE.copiar + (n > 1 ? `Copiar uma por uma (${Math.min(filaUma + 1, n)}/${n})` : "Copiar uma por uma");
+}
+const SEPARADOR = "\n\n━━━━━━━━━━\n\n";
+const textosSelecionados = () => [...selecionadas.values()].map(textoDaPromo);
+async function copiarTexto(texto) {
+  try { await navigator.clipboard.writeText(texto); }
+  catch (e) { const t = document.createElement("textarea"); t.value = texto; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+}
+function piscar(botao, texto) {
+  const antes = botao.innerHTML; botao.classList.add("copiado"); botao.textContent = texto;
+  setTimeout(() => { botao.classList.remove("copiado"); atualizarBarra(); if (botao.textContent === texto) botao.innerHTML = antes; }, 1400);
+}
+$("#iniciar-sel").onclick = () => modoSelecao(true);
+$("#sel-sair").onclick = () => modoSelecao(false);
+$("#sel-todas").onclick = () => {
+  document.querySelectorAll("#feed .card").forEach((c) => { const a = itens.get(Number(c.dataset.id)); selecionadas.set(a.id, a); c.classList.add("sel"); });
+  atualizarBarra();
+};
+$("#sel-copiar").onclick = async (e) => {
+  await copiarTexto(textosSelecionados().join(SEPARADOR));
+  piscar(e.currentTarget, `✓ ${selecionadas.size} copiadas`);
+  avisar(`${selecionadas.size} promos copiadas juntas: cole no WhatsApp`);
+  marcarPostadas([...selecionadas.values()]);
+};
+$("#sel-uma").onclick = async (e) => {
+  // Para mandar como mensagens separadas: cada clique copia a próxima.
+  const textos = textosSelecionados();
+  const i = filaUma % textos.length;
+  await copiarTexto(textos[i]);
+  marcarPostadas([[...selecionadas.values()][i]]);
+  filaUma = i + 1;
+  avisar(`Copiada a ${i + 1} de ${textos.length}: cole e volte para a próxima`);
+  atualizarBarra();
+};
+$("#sel-zap").onclick = () => {
+  // Abre o WhatsApp com o texto pronto; você escolhe o grupo ou contato e envia.
+  window.open("https://wa.me/?text=" + encodeURIComponent(textosSelecionados().join(SEPARADOR)), "_blank", "noopener");
+  marcarPostadas([...selecionadas.values()]);
+};
+
+/* ── busca, filtros e aviso sonoro ── */
+// Buscar procura em TODAS as seções (o perfume visto no grupo da coletora pode estar em Médias/Ruins).
+let esperaBusca = null;
+$("#busca").addEventListener("input", () => {
+  $("#titulo-secao").textContent = buscando() ? "Busca em todas as seções" : NOME_SECAO[secao];
+  $("#desc-secao").hidden = buscando();
+  clearTimeout(esperaBusca);
+  esperaBusca = setTimeout(() => { assinaturaFeed = ""; carregarFeed(); }, 250);
+});
+function desenharOrdem() {
+  document.querySelectorAll(".chip[data-ordem]").forEach((c) => {
+    c.classList.toggle("on", c.dataset.ordem === prefs.ordem); c.setAttribute("aria-pressed", String(c.dataset.ordem === prefs.ordem));
+  });
+}
+document.querySelectorAll(".chip[data-ordem]").forEach((c) => c.onclick = () => {
+  prefs.ordem = c.dataset.ordem; salvarPrefs(); desenharOrdem();
+  assinaturaFeed = ""; carregarFeed();
+  preBuscou = false; preBuscarSecoes();  // a outra ordem tem outras listas
+});
+desenharOrdem();
+document.querySelectorAll(".chip[data-filtro]").forEach((c) => c.onclick = () => {
+  const f = c.dataset.filtro;
+  if (filtros.has(f)) filtros.delete(f); else filtros.add(f);
+  c.classList.toggle("on", filtros.has(f)); c.setAttribute("aria-pressed", String(filtros.has(f)));
+  refiltrar();
+});
+
+let avisosLigados = prefs.som;
+function desenharSino() {
+  $("#sino").innerHTML = avisosLigados ? ICONE.sino : ICONE.semSino;
+  $("#sino").classList.toggle("on", avisosLigados);
+  $("#sino").setAttribute("aria-pressed", String(avisosLigados));
+}
+$("#sino").onclick = async () => {
+  avisosLigados = !avisosLigados;
+  prefs.som = avisosLigados; salvarPrefs(); desenharConfig();
+  if (avisosLigados && "Notification" in window && Notification.permission === "default") {
+    try { await Notification.requestPermission(); } catch (e) {}
+  }
+  desenharSino();
+  if (avisosLigados) { tocar(); avisar("Avisos ligados: você ouve um sinal quando chegar promo excelente"); }
+};
+function tocar() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [880, 1320].forEach((f, i) => {  // dois toques curtos, agradáveis
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.value = f; o.type = "sine";
+      g.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.18);
+      g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + i * 0.18 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.18 + 0.25);
+      o.connect(g).connect(ctx.destination); o.start(ctx.currentTime + i * 0.18); o.stop(ctx.currentTime + i * 0.18 + 0.3);
+    });
+  } catch (e) {}
+}
+async function avisarExcelente() {
+  if (!avisosLigados) return;
+  tocar();
+  try {
+    const [a] = await (await fetch("/api/feed?secao=excelentes&limite=1")).json();
+    if (a && "Notification" in window && Notification.permission === "granted") {
+      new Notification("🔥 Promo excelente", {body: `${a.produto} por ${brl(a.preco)}`, icon: a.foto || undefined});
+    }
+  } catch (e) {}
+}
+desenharSino();
+
+/* ── eventos ── */
+$("#secoes").addEventListener("click", (e) => { const b = e.target.closest(".secao-btn"); if (b) escolherSecao(b.dataset.s); });
+$("#feed").addEventListener("contextmenu", (e) => {
+  const card = e.target.closest(".card"); if (!card || e.target.closest("a")) return;
+  e.preventDefault();
+  if (!document.body.classList.contains("selecionando")) modoSelecao(true);
+  alternar(itens.get(Number(card.dataset.id)), card);
+});
+$("#feed").addEventListener("click", (e) => {
+  const card = e.target.closest(".card"); if (!card) return;
+  const a = itens.get(Number(card.dataset.id));
+  const alvo = e.target.closest("[data-acao]");
+  if (alvo && alvo.dataset.acao === "abrir") return;
+  if (alvo && alvo.dataset.acao === "copiar") { e.stopPropagation(); copiar(a, alvo); return; }
+  if (alvo && alvo.dataset.acao === "voto") { e.stopPropagation(); votar(a, Number(alvo.dataset.v)); return; }
+  if (document.body.classList.contains("selecionando")) { alternar(a, card); return; }
+  abrirDetalhe(a);
+});
+$("#fundo").onclick = fecharTudo;
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (document.querySelector(".gaveta.aberta, .janela.aberta")) fecharTudo();
+  else if (document.body.classList.contains("selecionando")) modoSelecao(false);
+});
+$("#abrir-avaliar").onclick = () => {
+  lembrarFoco();
+  $("#janela").classList.add("aberta"); $("#fundo").classList.add("aberto"); $("#erro").textContent = "";
+  setTimeout(() => $("#texto").focus(), 50);
+};
+$("#cancelar").onclick = fecharTudo;
+$("#avaliar").onclick = async () => {
+  const texto = $("#texto").value.trim();
+  if (!texto) { $("#erro").textContent = "Cole o texto da promo primeiro."; return; }
+  const b = $("#avaliar"); b.disabled = true; b.textContent = "Avaliando…"; $("#erro").textContent = "";
+  try {
+    const r = await (await fetch("/api/avaliar", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({texto, ml: $("#usar-ml").checked})})).json();
+    if (r.erro) { $("#erro").textContent = r.erro; return; }
+    $("#janela").classList.remove("aberta"); $("#texto").value = "";
+    itens.set(r.id, r);
+    escolherSecao(SECAO_DA_NOTA[r.nota] || "ruins");
+    carregarSecoes();
+    abrirDetalhe(r);
+  } catch (e) { $("#erro").textContent = "Não consegui falar com o painel."; }
+  finally { b.disabled = false; b.textContent = "Avaliar"; }
+};
+
+/* ── painel de configurações ── */
+function desenharConfig() {
+  document.querySelectorAll(".segmento[data-pref]").forEach((s) =>
+    s.querySelectorAll("button").forEach((b) => {
+      b.classList.toggle("on", prefs[s.dataset.pref] === b.dataset.v); b.setAttribute("aria-pressed", String(prefs[s.dataset.pref] === b.dataset.v));
+    }));
+  document.querySelectorAll("[data-pref-bool]").forEach((b) => {
+    b.classList.toggle("on", !!prefs[b.dataset.prefBool]);
+    b.setAttribute("role", "switch"); b.setAttribute("aria-checked", String(!!prefs[b.dataset.prefBool]));
+  });
+  document.querySelectorAll("[data-pref-sel]").forEach((s) => s.value = prefs[s.dataset.prefSel]);
+}
+$("#abrir-config").onclick = (e) => {
+  e.stopPropagation();
+  const aberta = $("#config").classList.toggle("aberta");
+  $("#abrir-config").setAttribute("aria-expanded", String(aberta));
+};
+document.addEventListener("click", (e) => { if (!e.target.closest(".config-wrap")) $("#config").classList.remove("aberta"); });
+document.querySelectorAll(".segmento[data-pref]").forEach((s) => s.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  prefs[s.dataset.pref] = b.dataset.v; salvarPrefs(); aplicarTema(); desenharConfig();
+}));
+document.querySelectorAll("[data-pref-bool]").forEach((b) => b.onclick = () => {
+  const chave = b.dataset.prefBool;
+  if (chave === "som") { $("#sino").click(); return; }  // o sino já cuida de pedir permissão e tocar o teste
+  prefs[chave] = !prefs[chave]; salvarPrefs(); desenharConfig();
+});
+document.querySelectorAll("[data-pref-sel]").forEach((s) => s.onchange = () => {
+  prefs[s.dataset.prefSel] = s.value; salvarPrefs();
+  if (s.dataset.prefSel === "intervalo") iniciarAtualizacao();
+});
+
+let relogio = null;
+/* ── calibração ── */
+const pct0 = (x) => Math.round(x * 100) + "%";
+async function abrirCalibracao() {
+  lembrarFoco(); setTimeout(() => $("#calib-fechar").focus(), 50);
+  $("#janela-calib").classList.add("aberta"); $("#fundo").classList.add("aberto");
+  $("#calib-erro").textContent = ""; $("#calib-aplicar").hidden = true;
+  const r = await (await fetch("/api/calibracao")).json();
+  if (!r.pronto) {
+    $("#calib-corpo").innerHTML = `Você já votou em <b>${r.exemplos}</b> promos (${r.positivos} 👍). Com <b>${r.minimo}</b> votos eu já consigo
+      calibrar com segurança. Faltam <b>${Math.max(0, r.minimo - r.exemplos)}</b>.`;
+    return;
+  }
+  const f = r.fatores, nomes = {relevancia: "produto (TOP/queridinho)", loja: "loja", sinais_ml: "sinais do ML"};
+  const mudancas = Object.entries(f).filter(([, v]) => v !== 1).map(([k, v]) => `${nomes[k]} ×${v}`);
+  if (r.limite_boa !== 60) mudancas.push(`"Boa" a partir de ${r.limite_boa}`);
+  $("#calib-corpo").innerHTML = `
+    <div style="display:flex;gap:18px;margin-bottom:10px">
+      <div><small>concordância hoje</small><div class="preco num">${pct0(r.concordancia_atual)}</div></div>
+      <div><small>com o ajuste</small><div class="preco num" style="color:var(--boa)">${pct0(r.concordancia_melhor)}</div></div>
+      <div><small>seus votos</small><div class="preco num">${r.exemplos}</div></div>
+    </div>
+    ${r.vale_aplicar ? `<div>Ajuste sugerido: <b>${esc(mudancas.join(", ") || "nenhum")}</b></div>`
+      : `<div>A curadora já concorda com você o máximo que esses ajustes conseguem. Nada a mudar agora.</div>`}
+    ${r.discordancias.length ? `<div style="margin-top:12px"><b>Onde ela discorda de você hoje</b></div>
+      <ul class="melhores">${r.discordancias.map((d) => `<li><span>${d.voto}</span><span>${esc(d.produto)}</span><span>${esc(NOME_NOTA[d.nota] || d.nota)}</span></li>`).join("")}</ul>` : ""}`;
+  $("#calib-aplicar").hidden = !r.vale_aplicar;
+}
+$("#calib").onclick = abrirCalibracao;
+
+/* ── alertas por produto ── */
+async function carregarAlvos() {
+  const lista = await (await fetch("/api/vigiados")).json();
+  $("#alvo-lista").innerHTML = lista.length ? lista.map((v) => {
+    const menor = v.menor ? `menor nas últimas 48h: <b>${brl(v.menor.preco)}</b> (${NOME_NOTA[v.menor.nota] || v.menor.nota}, ${quando(v.menor.ts)})`
+      : "não apareceu nas últimas 48h";
+    const aviso = v.alerta_ts ? ` · avisado ${quando(v.alerta_ts)} por ${brl(v.alerta_preco)}` : "";
+    return `<div class="alvo-item"><b>${esc(v.nome)} · até ${brl(v.preco_alvo)}</b>
+      <small>${menor}${v.normal ? ` · normal ${brl0(v.normal)}` : ""}${aviso}${v.criado_por ? ` · por ${esc(v.criado_por)}` : ""}</small>
+      <button class="btn" data-remover="${v.id}" title="Parar de vigiar">Remover</button></div>`;
+  }).join("") : `<div class="dica">Nenhum alerta ainda. Ex.: "Lattafa Asad 100ml" até R$ 150.</div>`;
+}
+function abrirAlvos() {
+  lembrarFoco();
+  $("#alvo-erro").textContent = "";
+  $("#janela-alvos").classList.add("aberta"); $("#fundo").classList.add("aberto");
+  carregarAlvos(); setTimeout(() => $("#alvo-nome").focus(), 50);
+}
+$("#abrir-alvos").onclick = abrirAlvos;
+$("#config-alvos").onclick = () => { $("#config").classList.remove("aberta"); abrirAlvos(); };
+$("#alvo-fechar").onclick = fecharTudo;
+$("#alvo-add").onclick = async () => {
+  $("#alvo-erro").textContent = "";
+  const r = await (await fetch("/api/vigiados", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({nome: $("#alvo-nome").value, preco_alvo: $("#alvo-preco").value})})).json();
+  if (r.erro) { $("#alvo-erro").textContent = r.erro; return; }
+  $("#alvo-nome").value = ""; $("#alvo-preco").value = "";
+  avisar(`🎯 Vou avisar quando ${r.nome} sair por até ${brl(r.preco_alvo)}`);
+  carregarAlvos();
+};
+$("#alvo-preco").addEventListener("keydown", (e) => { if (e.key === "Enter") $("#alvo-add").click(); });
+$("#alvo-lista").addEventListener("click", async (e) => {
+  const b = e.target.closest("[data-remover]"); if (!b) return;
+  await fetch("/api/vigiados/remover", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({id: Number(b.dataset.remover)})});
+  carregarAlvos();
+});
+$("#calib-fechar").onclick = fecharTudo;
+$("#calib-aplicar").onclick = async () => {
+  const r = await (await fetch("/api/calibracao/aplicar", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"})).json();
+  if (r.erro) { $("#calib-erro").textContent = r.erro; return; }
+  avisar(`Ajuste aplicado: concordância ${pct0(r.concordancia)} (cópia do anterior: ${r.backup})`);
+  $("#calib-fechar").click();
+};
+
+/* ── conta e equipe ── */
+async function carregarConta() {
+  try {
+    const eu = await (await fetch("/api/eu")).json();
+    if (!eu.login) return;  // no PC, sem login
+    $("#conta-bloco").hidden = false;
+    $("#conta-nome").textContent = eu.nome;
+    if (eu.admin) { $("#equipe-bloco").hidden = false; carregarEquipe(); }
+  } catch (e) {}
+}
+async function carregarEquipe() {
+  const lista = await (await fetch("/api/usuarios")).json();
+  $("#equipe-lista").innerHTML = lista.map((u) => `<div class="fonte"><i class="${u.ativo ? "ok" : ""}"></i>
+    <div>${esc(u.nome)}${u.admin ? " · admin" : ""}${u.ativo ? "" : " · desativado"}</div></div>`).join("");
+}
+$("#sair").onclick = async () => { await fetch("/api/sair", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"}); location.href = "/entrar"; };
+// Código de recuperação (20/10): aparece uma vez; com ele, em "Esqueci a senha", a pessoa cria outra senha sozinha.
+$("#gerar-codigo").onclick = async () => {
+  const r = await (await fetch("/api/recuperacao", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"})).json();
+  const caixa = $("#codigo-conta"); caixa.hidden = false;
+  if (r.erro) { caixa.textContent = r.erro; return; }
+  caixa.innerHTML = `<span>Guarde este código: ele aparece só agora, e o anterior (se havia) deixou de valer.</span>
+    <code style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:.06em;background:var(--surface-2);padding:8px;border-radius:6px;margin-top:4px;text-align:center;user-select:all"></code>
+    <button class="btn" style="margin-top:6px;padding:5px 10px">${ICONE.copiar}Copiar código</button>`;
+  caixa.querySelector("code").textContent = r.codigo;
+  caixa.querySelector("button").onclick = async (e) => { await copiarTexto(r.codigo); piscar(e.currentTarget, "✓ Copiado"); };
+  $("#gerar-codigo").textContent = "Gerar outro";
+  caixa.scrollIntoView({block: "nearest"});  // o código e o "Copiar" à vista, mesmo com o menu rolado
+};
+$("#convidar").onclick = async () => {
+  const nome = $("#convite-nome").value.trim();
+  if (!nome) return;
+  const r = await (await fetch("/api/convidar", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({nome})})).json();
+  const caixa = $("#convite-link"); caixa.hidden = false;
+  if (r.erro) { caixa.textContent = r.erro; return; }
+  caixa.innerHTML = `<span>Mande este link para <b></b> (vale ${r.vale_horas}h, uma vez só):</span>
+    <code style="word-break:break-all;background:var(--surface-2);padding:6px;border-radius:6px;margin-top:4px"></code>
+    <button class="btn" style="margin-top:6px;padding:5px 10px">⧉ Copiar link</button>`;
+  caixa.querySelector("b").textContent = r.nome;
+  caixa.querySelector("code").textContent = r.link;
+  caixa.querySelector("button").onclick = async (e) => { await copiarTexto(r.link); piscar(e.currentTarget, "✓ Copiado"); };
+  $("#convite-nome").value = "";
+};
+$("#config").addEventListener("click", (e) => e.stopPropagation());
+
+// Uma ida e volta só por atualização: status, contagem das seções e a lista da seção aberta.
+let atualizando = false;
+async function atualizarTudo() {
+  if (atualizando) return;  // conexão lenta: não empilha pedidos
+  atualizando = true;
+  try {
+    const chave = chaveFeed();  // a seção pode mudar enquanto a resposta vem
+    const d = await (await fetch(`/api/painel?secao=${secaoDaBusca()}&limite=${buscando() ? 400 : 120}&ordem=${prefs.ordem}`)).json();
+    desenharSugestao(d.sugestao); carregarStatus(d.status); carregarSecoes(d.secoes); carregarFeed(d.feed, chave);
+    preBuscarSecoes();
+  } catch (e) {} finally { atualizando = false; }
+}
+function iniciarAtualizacao() {
+  clearInterval(relogio);
+  relogio = setInterval(atualizarTudo, Number(prefs.intervalo || 3) * 1000);
+}
+
+if (prefs.esconderPostadas) {
+  filtros.add("naopostadas");
+  document.querySelector('.chip[data-filtro="naopostadas"]').classList.add("on");
+}
+document.querySelectorAll(".chip[data-filtro]").forEach((c) => c.setAttribute("aria-pressed", String(filtros.has(c.dataset.filtro))));
+desenharConfig();
+escolherSecao(prefs.abrirEm === "melhor" ? "excelentes" : prefs.abrirEm, false);
+atualizarTudo();
+iniciarAtualizacao();
+carregarConta();
+</script>
+</body>
+</html>

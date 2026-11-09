@@ -1,0 +1,9 @@
+[Unit]
+Description=Curadora: desliga a normalizadora as 22:35 de segunda, quarta e quinta (14/10)
+
+[Timer]
+OnCalendar=Mon,Wed,Thu *-*-* 22:35:00
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target

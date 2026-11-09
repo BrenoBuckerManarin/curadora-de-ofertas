@@ -1,0 +1,13 @@
+[Unit]
+Description=Curadora: liga o pipeline na sexta, das 17:15 as 21:30 (pedido do Breno em 11/10)
+
+[Service]
+Type=oneshot
+KillMode=process
+WorkingDirectory=/home/ubuntu/curadora
+# Dia marcado em dados/pipeline.pular (uma data AAAA-MM-DD por linha) nao liga.
+ExecCondition=/bin/sh -c '! grep -qx "$(date +%%F)" /home/ubuntu/curadora/dados/pipeline.pular 2>/dev/null'
+# 14/10: a normalizadora só era ligada pelas janelas da coletora (terça, sexta, fim de semana); na quarta o
+# pipeline mandou 35 min para ela parada. Liga junto (o "-" deixa o pipeline subir mesmo se falhar).
+ExecStartPre=-/home/ubuntu/.hermes/scripts/perfume_normalizer_ctl.sh on
+ExecStart=/home/ubuntu/curadora/pipelinectl on --ate 21:30

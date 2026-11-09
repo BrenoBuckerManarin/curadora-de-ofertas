@@ -1,0 +1,7 @@
+[Unit]
+Description=Curadora: desliga a normalizadora depois do turno de segunda, quarta e quinta (14/10)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/curadora
+ExecStart=/home/ubuntu/curadora/dados/normalizadora_desliga.sh

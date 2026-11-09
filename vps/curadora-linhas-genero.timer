@@ -1,0 +1,9 @@
+[Unit]
+Description=Curadora: atualiza a lista das linhas nas duas versões todo dia às 05:30
+
+[Timer]
+OnCalendar=*-*-* 05:30:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,7 @@
+[Unit]
+Description=Curadora: lista das linhas de perfume nas duas versões (masc/fem) para a normalizadora (17/10)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/curadora
+ExecStart=/usr/bin/python3 /home/ubuntu/curadora/linhas_dois_generos.py --gravar

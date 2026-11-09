@@ -1,0 +1,9 @@
+[Unit]
+Description=Curadora: relatório diário do experimento curadora x equipe
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/curadora
+ExecStart=/usr/bin/python3 %h/curadora/relatorio_experimento.py --enviar
+Environment=PYTHONIOENCODING=utf-8
+Nice=15

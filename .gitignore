@@ -1,0 +1,5 @@
+dados/
+backups/
+__pycache__/
+*.pyc
+config.backup-*.json

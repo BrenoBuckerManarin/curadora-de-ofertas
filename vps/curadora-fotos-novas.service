@@ -1,0 +1,8 @@
+[Unit]
+Description=Curadora: coleta fotos boas dos grupos para produtos com menos de 5 fotos no banco (17/10)
+
+[Service]
+Type=oneshot
+Nice=10
+WorkingDirectory=/home/ubuntu/curadora
+ExecStart=/usr/bin/python3 /home/ubuntu/curadora/fotos_novas.py

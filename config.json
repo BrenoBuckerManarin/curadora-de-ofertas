@@ -1,0 +1,367 @@
+{
+  "janela_dias": 60,
+  "endereco_publico": "https://curadora.exemplo.com",
+  "whatsapp_alertas": {
+    "grupo": "",
+    "notas": [
+      "IMPERDÍVEL"
+    ],
+    "observacao": "grupo = id do grupo de alertas (ex.: 1203634...@g.us). Vazio = não manda nada."
+  },
+  "marcas_que_vendem": [
+    "natura",
+    "boticario",
+    "primacial",
+    "body splash",
+    "paris elysees",
+    "principia"
+  ],
+  "pagina_de_cupons": {
+    "ligado": false,
+    "observacao": "13/10 (Breno): a página oficial de cupons dos afiliados do ML. Cupom que os grupos usam e que SAIU da página conta como esgotado, até o Breno manter num post ou um grupo avisar que voltou. Não pega regra de lá (a porcentagem dela erra) e não ressuscita cupom."
+  },
+  "grupo_curadora": {
+    "ligado": false,
+    "intervalo_s": 90,
+    "foto": true,
+    "observacao": "13/10 (Breno): a curadora no grupo da equipe, no lugar da coletora. Com o pipeline rodando, cada promo aprovada aparece no grupo de whatsapp_alertas em 2 mensagens (a promo limpa e a avaliação embaixo). ligado=false desliga na hora, sem reiniciar nada."
+  },
+  "min_observacoes": 3,
+  "top_vendidos": [
+    "Armaf Club de Nuit Intense",
+    "Lattafa Asad",
+    "Sabah Al Ward",
+    "Lattafa Fakhar Platin",
+    "Sabah Al Ward Sugar",
+    "Lattafa The Kingdom",
+    "Al Wataniah Bareeq Al Dhahab",
+    "Lattafa Yara",
+    "Attracione Men",
+    "Wazeer Al Noble",
+    "Lattafa Khamrah",
+    "Lattafa Khamrah Qahwa",
+    "Lattafa Khamrah Waha",
+    "Lattafa Yara Candy",
+    "Lattafa Yara Tous",
+    "Lattafa Yara Moi",
+    "Lattafa Yara Elixir",
+    "Natura Kaiak",
+    "Natura Kaiak Ultra",
+    "Natura Kaiak Aero",
+    "Natura Kaiak Sonar",
+    "Natura Kaiak 21K"
+  ],
+  "radar_extras": [
+    "Natura Kaiak",
+    "Natura K Max",
+    "Natura Homem Identidad",
+    "Natura Essencial Sentir",
+    "Natura Essencial",
+    "Natura Una Somos",
+    "Natura Kaiak Ultra",
+    "Natura Essencial Exclusivo",
+    "Natura Essencial Supreme",
+    "O Boticário Floratta Red",
+    "Natura Essencial Safran",
+    "Natura Essencial Oud",
+    "Natura Homem Sagaz",
+    "O Boticário Zaad Infinity",
+    "O Boticário Clash",
+    "O Boticário Egeo Blue",
+    "Natura Homem Coragio",
+    "Natura Essencial Elixir",
+    "Natura Essencial Único",
+    "Natura Essencial Atrai",
+    "Paris Elysees Vodka Man",
+    "Paris Elysees Vodka Wild",
+    "Paris Elysees Vodka Extreme",
+    "Paris Elysees Vodka Limited",
+    "Kit Body Splash Primacial",
+    "Body Splash Primacial Blunn",
+    "Body Splash Primacial Barbarius",
+    "Principia Body Splash",
+    "Paris Elysees Vodka Prime",
+    "Paris Elysees Vodka Gold Elixir",
+    "Kit Body Splash Primacial Infalivel",
+    "Kit Body Splash Primacial Vibration Blunn"
+  ],
+  "top_categorias": [
+    "kit_body_splash"
+  ],
+  "lojas_top": [
+    "Lipx",
+    "Wathiq Parfums"
+  ],
+  "lojas_oficiais_confiaveis": [
+    "O Boticário",
+    "Klassey",
+    "Primacial",
+    "Paris Elysees",
+    "Oud",
+    "Kid's Life",
+    "Natura",
+    "Banderas",
+    "Armani Beauty",
+    "Paris Intense",
+    "Azzaro",
+    "Vanvic",
+    "Attracione",
+    "Rabanne",
+    "Nautica",
+    "Mawwal",
+    "Jequiti",
+    "Avon",
+    "Lancôme",
+    "Benetton",
+    "Eudora",
+    "Hinode"
+  ],
+  "marcas": [
+    "lattafa",
+    "armaf",
+    "al wataniah",
+    "maison alhambra",
+    "afnan",
+    "rasasi",
+    "french avenue",
+    "rayhaan",
+    "mawwal",
+    "orientica",
+    "ard al zaafaran",
+    "al haramain",
+    "khadlaj",
+    "fragrance world",
+    "paris corner",
+    "emper",
+    "zimaya",
+    "riiffs",
+    "nabeel",
+    "swiss arabian",
+    "ajmal",
+    "natura",
+    "o boticario",
+    "boticario",
+    "eudora",
+    "jequiti",
+    "avon",
+    "granado",
+    "armani",
+    "giorgio armani",
+    "azzaro",
+    "ysl",
+    "yves saint laurent",
+    "dior",
+    "versace",
+    "rabanne",
+    "paco rabanne",
+    "jean paul gaultier",
+    "chanel",
+    "prada",
+    "carolina herrera",
+    "givenchy",
+    "dolce gabbana",
+    "calvin klein",
+    "hugo boss",
+    "montblanc",
+    "bvlgari",
+    "lacoste",
+    "davidoff",
+    "nautica",
+    "antonio banderas",
+    "banderas",
+    "paris elysees",
+    "benetton",
+    "lancome",
+    "mercedes benz",
+    "ralph lauren",
+    "lab 8",
+    "maison asrar",
+    "issey miyake",
+    "ferrari",
+    "joop",
+    "xerjoff",
+    "adidas",
+    "la rive",
+    "ciclo",
+    "mont blanc",
+    "burberry",
+    "nishane",
+    "nina ricci",
+    "cacharel",
+    "phebo",
+    "shakira",
+    "britney spears",
+    "moschino",
+    "salvador dali",
+    "valentino",
+    "gucci"
+  ],
+  "sinonimos": {
+    "bareq": "bareeq",
+    "dahab": "dhahab",
+    "platinum": "platin",
+    "nuite": "nuit",
+    "woman": "women",
+    "kingdon": "kingdom"
+  },
+  "pesos": {
+    "curva_preco": [
+      [
+        -10,
+        0
+      ],
+      [
+        0,
+        10
+      ],
+      [
+        3,
+        15
+      ],
+      [
+        7,
+        27
+      ],
+      [
+        10,
+        33
+      ],
+      [
+        15,
+        45
+      ],
+      [
+        20,
+        50
+      ],
+      [
+        30,
+        60
+      ]
+    ],
+    "menor_preco_janela": 6,
+    "recorde_com_folga": 10,
+    "preco_max": 60,
+    "pct_minimo_para_ser_promo": 3,
+    "teto_sem_desconto_real": 44,
+    "tetos_por_desconto": [
+      [
+        7,
+        59
+      ],
+      [
+        12,
+        74
+      ]
+    ],
+    "teto_sem_historico": 70,
+    "fator_pouco_historico": 0.8,
+    "top_vendido": 18,
+    "favorito_publico": 8,
+    "loja_top": 20,
+    "loja_oficial_confiavel": 14,
+    "loja_oficial_alegada": 5,
+    "loja_verificada_alegada": 3,
+    "fator_nao_confirmado": 0.75,
+    "mais_vendido": 3,
+    "full": 2,
+    "desconto_anunciado_max": 2,
+    "kit": 12,
+    "tetos_por_desconto_loja_selo": [
+      [
+        7,
+        74
+      ]
+    ]
+  },
+  "faixas_categoria": {
+    "kit": {
+      "excelente": 160,
+      "bom": 250
+    },
+    "body_splash": {
+      "excelente": 90,
+      "bom": 140
+    },
+    "nacional": {
+      "excelente": 140,
+      "bom": 190
+    },
+    "arabe": {
+      "excelente": 150,
+      "bom": 220
+    },
+    "grife": {
+      "excelente": 300,
+      "bom": 450
+    },
+    "outro": {
+      "excelente": 160,
+      "bom": 260
+    }
+  },
+  "favoritos_publico": [
+    "aventus",
+    "sauvage",
+    "invictus",
+    "acqua di gio",
+    "le male",
+    "ultra male",
+    "torino 21",
+    "erba pura",
+    "hacivat",
+    "god of fire",
+    "althair",
+    "club de nuit",
+    "asad",
+    "hawas",
+    "khamrah",
+    "9pm",
+    "fakhar",
+    "liquid brun",
+    "turathi",
+    "malbec",
+    "kaiak",
+    "natura homem",
+    "essencial"
+  ],
+  "grupos_fonte": {
+    "120363000000000003": "#84 FONTE ALFA | PERFUMES",
+    "120363000000000004": "FONTE EPSILON | 346",
+    "120363000000000005": "Fonte Zeta | 133",
+    "120363000000000006": "FONTE EPSILON | 348",
+    "120363000000000007": "FONTE BETA #27",
+    "120363000000000008": "Fonte Eta 03",
+    "120363000000000009": "Fonte Teta 3",
+    "120363000000000010": "FONTE GAMA #45",
+    "120363000000000011": "Fonte Delta #52"
+  },
+  "grupo_postagens": {
+    "id": "120363000000000002",
+    "nome": "Grupo da Equipe",
+    "observacao": "grupo onde a equipe posta: a curadora só LÊ (marca postadas e mede acerto)"
+  },
+  "experimento": {
+    "inicio": "2026-10-06",
+    "fim": "2026-10-12",
+    "ensaio": "2026-10-05",
+    "hora_ini": "08:00",
+    "hora_fim": "22:00",
+    "intervalo_min": 7,
+    "observacao": "curadora anota o que postaria a cada 7 min; relatório diário 22:15 (só simulação)"
+  },
+  "conferente": {
+    "ligado": true,
+    "grupo_normalizadora": "120363000000000012",
+    "grupo_edicao": "120363000000000001",
+    "observacao": "09/10 (Breno autorizou): confere tudo que entra na normalizadora, aprende cupom esgotado com a edição do Breno e publica em ~/.hermes/run/curadora_para_normalizadora.json (só lê os grupos)"
+  },
+  "cupom_quente": {
+    "ligado": true,
+    "observacao": "cupom da equipe (10/10 17h30): vale quando o Breno poe o cupom a mao em 2 posts ou mais e ainda nao tirou; o pipeline manda as proximas ja com ele e com o preco refeito, sem mudar a ordem da fila. ligado=false desliga tudo."
+  },
+  "ficha_cupom": {
+    "modo": "sombra",
+    "observacao": "30/10 (Breno: ficha do cupom): 'sombra' so calcula e registra em dados/ficha_cupom_sombra.jsonl o que a ficha faria com cada cupom (onde vale, se esta vivo, sonda, ritmo), sem mudar nenhum envio; relatorio: python3 ficha_relatorio.py --dia AAAA-MM-DD. 'desligada' nao registra nada."
+  }
+}

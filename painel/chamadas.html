@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chamadas prontas · Curadora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4f0; --surface: #ffffff; --surface-2: #f2efe9; --ink: #1d1b18; --ink-2: #5f5a52; --ink-3: #9a948a;
+  --line: #e6e1d8; --gold: #a8773a; --gold-soft: #f6eddf; --boa: #2f7d4f; --boa-soft: #e4f3e9;
+  --ruim: #8a857e; --ruim-soft: #f1efec; --erro: #b42318;
+  --shadow: 0 1px 2px rgba(29,27,24,.04), 0 6px 20px rgba(29,27,24,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131210; --surface: #1c1b18; --surface-2: #25231f; --ink: #f3efe8; --ink-2: #b3ada3; --ink-3: #7d776e;
+    --line: #2f2d29; --gold: #d4a466; --gold-soft: #2c241a; --boa: #5cc48a; --boa-soft: #18301f;
+    --ruim: #8f8a83; --ruim-soft: #232220; --erro: #ff8a7a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.25);
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 Inter, system-ui, sans-serif; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 18px 16px 80px; }
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h1 { font: 600 26px/1.15 Fraunces, Georgia, serif; margin: 0; text-wrap: balance; }
+a.voltar { color: var(--gold); text-decoration: none; font-weight: 600; font-size: 14px; }
+.explica { color: var(--ink-2); margin: 8px 0 14px; max-width: 62ch; }
+.resumo { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.resumo span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: 13px;
+  color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.resumo b { color: var(--ink); }
+.produto { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+  padding: 14px 14px 12px; margin-bottom: 12px; }
+.produto.feito { opacity: .62; box-shadow: none; }
+.produto h2 { font-size: 16px; margin: 0; font-weight: 600; }
+.meta { color: var(--ink-3); font-size: 12.5px; margin-top: 2px; }
+.contexto { margin: 8px 0 4px; font-size: 12.5px; color: var(--ink-2); display: grid; gap: 2px; }
+.contexto i { font-style: normal; color: var(--ink-3); }
+.linha { display: flex; align-items: center; gap: 8px; padding: 8px 0 0; }
+.linha input { flex: 1; min-width: 0; font: 600 15px Inter, system-ui, sans-serif; letter-spacing: .01em; color: var(--ink);
+  background: var(--surface-2); border: 1px solid transparent; border-radius: 10px; padding: 9px 11px; text-transform: uppercase; }
+.linha input:focus { outline: none; border-color: var(--gold); background: var(--surface); }
+.linha.aprovada input { background: var(--boa-soft); color: var(--boa); }
+.linha.recusada input { background: var(--ruim-soft); color: var(--ruim); text-decoration: line-through; }
+.conta { font-size: 11.5px; color: var(--ink-3); width: 22px; text-align: right; font-variant-numeric: tabular-nums; }
+.conta.passou { color: var(--erro); font-weight: 700; }
+button { font: inherit; cursor: pointer; }
+.b { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 10px; min-width: 40px; height: 38px;
+  font-size: 16px; }
+.b.sim.ligado { background: var(--boa); border-color: var(--boa); color: #fff; }
+.b.nao.ligado { background: var(--ruim); border-color: var(--ruim); color: #fff; }
+.base { font-size: 11.5px; color: var(--ink-3); padding: 2px 2px 0; }
+.acoes { display: flex; justify-content: flex-end; margin-top: 10px; }
+.todas { border: 1px solid var(--line); background: var(--gold-soft); color: var(--gold); border-radius: 10px; padding: 7px 12px;
+  font-weight: 600; font-size: 13px; }
+.aviso { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: var(--ink); color: var(--bg);
+  padding: 10px 16px; border-radius: 12px; font-size: 13.5px; max-width: 92vw; display: none; z-index: 5; }
+.vazio { color: var(--ink-2); padding: 40px 0; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Chamadas prontas</h1><a class="voltar" href="/">← voltar ao painel</a></header>
+  <p class="explica">Chamadas que deixei prontas por produto. As verdes já estão valendo: a normalizadora usa quando o produto
+    chegar. Não gostou de alguma? Toque no ✕ que ela sai, ou edite o texto. Se você trocar uma delas na Edição, ela também sai
+    sozinha.</p>
+  <div class="resumo" id="resumo"></div>
+  <div id="lista"><p class="vazio">Carregando…</p></div>
+</div>
+<div class="aviso" id="aviso"></div>
+<script>
+const EMOJI = /[\u{1F000}-\u{1FAFF}☀-➿](?:[\u{1F3FB}-\u{1F3FF}]|️|‍[\u{1F000}-\u{1FAFF}☀-➿])*/gu;
+let LIMITE = 28;
+const visual = t => t.replace(EMOJI, "\u0001").length;
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+let temporizador;
+function avisar(texto) {
+  const a = document.getElementById("aviso");
+  a.textContent = texto; a.style.display = "block";
+  clearTimeout(temporizador); temporizador = setTimeout(() => a.style.display = "none", 4200);
+}
+function contexto(c) {
+  const l = [];
+  if (c.notas) l.push(`<span><i>Notas no anúncio do ML:</i> ${esc(c.notas)}</span>`);
+  if ((c.prontas || []).length) l.push(`<span><i>Já tem pronta:</i> ${c.prontas.map(esc).join(" · ")}</span>`);
+  if ((c.do_breno || []).length) l.push(`<span><i>Você já escreveu:</i> ${c.do_breno.map(esc).join(" · ")}</span>`);
+  if ((c.ia || []).length) l.push(`<span><i>A IA escreveu:</i> ${c.ia.map(esc).join(" · ")}</span>`);
+  return l.length ? `<div class="contexto">${l.join("")}</div>` : "";
+}
+function linha(c) {
+  const n = visual(c.chamada);
+  return `<div class="linha ${c.estado}" data-id="${c.id}">
+      <input value="${esc(c.chamada)}" aria-label="Chamada" autocomplete="off" spellcheck="false">
+      <span class="conta ${n > LIMITE ? "passou" : ""}">${n}</span>
+      <button class="b sim ${c.estado === "aprovada" ? "ligado" : ""}" title="Aprovar" aria-label="Aprovar">✓</button>
+      <button class="b nao ${c.estado === "recusada" ? "ligado" : ""}" title="Recusar" aria-label="Recusar">✕</button>
+    </div><div class="base">${esc([c.tipo, c.base, c.usos ? `você manteve ${c.usos}×` : "",
+        c.estado === "recusada" && c.por ? c.por : ""].filter(Boolean).join(" · "))}</div>`;
+}
+function desenhar(d) {
+  LIMITE = d.limite || 28;
+  const r = d.resumo;
+  document.getElementById("resumo").innerHTML =
+    `<span><b>${r.aprovada}</b> valendo</span><span><b>${r.recusada}</b> tiradas</span>` +
+    (r.pendente ? `<span><b>${r.pendente}</b> esperando</span>` : "");
+  const lista = document.getElementById("lista");
+  if (!d.produtos.length) { lista.innerHTML = '<p class="vazio">Nenhuma sugestão por enquanto.</p>'; return; }
+  lista.innerHTML = d.produtos.map(p => `<section class="produto" data-chave="${esc(p.chave)}">
+      <h2>${esc(p.produto)}</h2>
+      <div class="meta">passou ${p.posts}× pela normalizadora em 45 dias</div>
+      ${contexto(p.contexto || {})}
+      ${p.chamadas.map(linha).join("")}
+      ${p.pendentes > 1 ? '<div class="acoes"><button class="todas">Aprovar as que faltam</button></div>' : ""}
+    </section>`).join("");
+}
+async function carregar() {
+  const r = await fetch("/api/chamadas");
+  if (r.status === 401) { location.href = "/entrar"; return; }
+  desenhar(await r.json());
+}
+async function decidir(el, estado) {
+  const texto = el.querySelector("input").value;
+  const r = await (await fetch("/api/chamadas/decidir", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({id: Number(el.dataset.id), estado, texto})})).json();
+  if (r.erro) { avisar(r.erro); return false; }
+  if (r.aviso) avisar(r.aviso);
+  return true;
+}
+document.getElementById("lista").addEventListener("click", async e => {
+  const botao = e.target.closest("button");
+  if (!botao) return;
+  if (botao.classList.contains("todas")) {
+    for (const el of botao.closest(".produto").querySelectorAll(".linha.pendente")) if (!(await decidir(el, "aprovada"))) break;
+    return carregar();
+  }
+  const el = botao.closest(".linha");
+  const alvo = botao.classList.contains("sim") ? "aprovada" : "recusada";
+  // tocar de novo no mesmo botão desfaz
+  if (await decidir(el, botao.classList.contains("ligado") ? "pendente" : alvo)) carregar();
+});
+document.getElementById("lista").addEventListener("input", e => {
+  if (e.target.tagName !== "INPUT") return;
+  const conta = e.target.closest(".linha").querySelector(".conta");
+  const n = visual(e.target.value.trim());
+  conta.textContent = n; conta.classList.toggle("passou", n > LIMITE);
+});
+document.getElementById("lista").addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.tagName === "INPUT") e.target.closest(".linha").querySelector(".sim").click();
+});
+carregar();
+</script>
+</body>
+</html>
