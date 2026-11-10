@@ -1,7 +1,9 @@
 # Curadora de Ofertas
 
 Sistema que lê promoções de perfume em grupos de WhatsApp, confere cada uma no Mercado Livre e dá uma nota de 0 a 100
-dizendo se a oferta é boa de verdade. A equipe usa um painel web para ver as melhores ofertas e decidir o que postar.
+dizendo se a oferta é boa de verdade. Ele não depende só dos grupos: um radar varre o Mercado Livre o dia inteiro,
+produto a produto, e acha a promoção antes de alguém postar. A equipe usa um painel web para ver as melhores ofertas
+e decidir o que postar.
 
 Construí este projeto com Claude Code a partir de outubro de 2026 e ele roda em produção numa VPS Linux.
 
@@ -30,21 +32,30 @@ Antes, a escolha era feita no olho.
 ## O que a curadora faz
 
 1. Lê tudo o que chega nos grupos-fonte, ao vivo (só leitura).
-2. Confere cada promoção no Mercado Livre na hora: preço de agora, quem vende, selo de loja oficial e se o link é
+2. **Radar do Mercado Livre:** para cada produto da lista dos mais vendidos, lê pela API todas as ofertas do catálogo
+   (todos os vendedores), de tempos em tempos, o dia inteiro. Cada preço vira histórico real, e a oferta mais barata
+   (e a mais barata em loja oficial) é avaliada na hora: se for Boa ou Excelente, alerta a equipe antes de qualquer
+   grupo postar. Loja oficial só vale com mais de 5 mil vendas; o selo da API sozinho não basta.
+3. **Vigia de preço:** reabre os links já conhecidos dos mais vendidos para pegar queda de preço, e aceita alvo por
+   produto cadastrado pela equipe ("me avisa quando o X passar de R$ 150").
+4. Confere cada promoção no Mercado Livre na hora: preço de agora, quem vende, selo de loja oficial e se o link é
    mesmo daquele produto.
-3. Compara o preço com a mediana dos últimos 60 dias daquele produto exato e dá a nota: Excelente, Boa, Média ou Ruim,
+5. Compara o preço com a mediana dos últimos 60 dias daquele produto exato e dá a nota: Excelente, Boa, Média ou Ruim,
    com o motivo.
-4. Mostra tudo num painel com login para a equipe filtrar, encaminhar e votar. Os votos recalibram os pesos da nota.
-5. Na rodada da noite, escolhe a melhor oferta a cada 4 minutos e manda para virar post. O post final é sempre
+6. Mostra tudo num painel com login para a equipe filtrar, encaminhar e votar. Os votos recalibram os pesos da nota.
+7. Na rodada da noite, escolhe a melhor oferta a cada 4 minutos e manda para virar post. O post final é sempre
    revisado e publicado por uma pessoa.
-6. Aprende com as correções: cada cupom tirado ou chamada trocada na revisão volta como regra.
+8. Aprende com as correções: cada cupom tirado ou chamada trocada na revisão volta como regra.
 
 ```mermaid
 flowchart TD
     A[Grupos-fonte no WhatsApp] -->|leitura ao vivo| B[Parser: entende a promoção]
+    R[Radar: API do ML, todas as ofertas dos mais vendidos] --> C
+    V[Vigia de preço e alvos por produto] --> C
     B --> C[Identidade: qual produto é]
     C --> D[Conferência no Mercado Livre]
     D --> E[Histórico de 60 dias em SQLite]
+    R -->|cada preço vira histórico| E
     E --> F[Score de 0 a 100]
     F --> G[Painel web com login]
     F --> H[Rodada: melhor oferta a cada 4 min]
@@ -95,6 +106,7 @@ deste repositório.
 | `curadora/parser.py` | lê a promoção de qualquer grupo |
 | `curadora/identidade.py` | descobre qual produto é |
 | `curadora/ml.py`, `curadora/ml_api.py` | conferência na página e na API pública do Mercado Livre |
+| `curadora/radar.py`, `curadora/vigia.py`, `curadora/vigiados.py` | radar do ML (todas as ofertas dos mais vendidos pela API), vigia de queda de preço e alvos por produto |
 | `curadora/historico.py` | preço normal dos últimos 60 dias |
 | `curadora/score.py` | a nota de 0 a 100 |
 | `curadora/travas.py` | as travas antes de enviar |
